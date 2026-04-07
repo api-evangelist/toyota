@@ -25,16 +25,12 @@ created: '2025-02-25'
 modified: '2026-03-16'
 position: Consumer
 description: >-
-  Toyota Motor Corporation is a Japanese multinational automotive manufacturer
-  that designs, manufactures, and sells vehicles, including cars, trucks, and
-  buses. Founded in 1937, Toyota has become one of the largest automakers in the
-  world, known for its reliability, innovation, and commitment to
-  sustainability. Toyota's product lineup includes a wide range of vehicles,
-  from fuel-efficient hybrids like the Prius to rugged trucks like the Tacoma.
-  In addition to producing vehicles, Toyota also operates financial services,
-  research and development centers, and manufacturing plants around the globe.
-  The company is dedicated to creating safe, high-quality vehicles that meet the
-  needs of customers worldwide.
+  Toyota Motor Corporation is a Japanese multinational automotive manufacturer that
+  designs, manufactures, and sells vehicles, including cars, trucks, and buses. Founded
+  in 1937, Toyota has become one of the largest automakers in the world, known for
+  its reliability, innovation, and commitment to sustainability. Toyota's product
+  lineup includes a wide range of vehicles, from fuel-efficient hybrids like the Prius
+  to rugged trucks like the Tacoma.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
