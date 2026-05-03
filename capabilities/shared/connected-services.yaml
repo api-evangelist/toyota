@@ -1,0 +1,441 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Toyota Connected Services"
+  description: "Toyota Connected Services API for real-time vehicle status, location, electric/hybrid battery data, climate control, remote commands, trip history, notifications, and service history for Toyota and Lexus connected vehicles."
+  tags:
+    - Automotive
+    - Connected Car
+    - Remote Control
+    - Vehicle Status
+    - Electric Vehicles
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      TOYOTA_CONNECTED_TOKEN: TOYOTA_CONNECTED_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: toyota-connected
+      baseUri: https://api.toyota.com/connected/v1
+      description: "Toyota Connected Services API for real-time vehicle data and remote commands"
+      authentication:
+        type: bearer
+        token: "{{TOYOTA_CONNECTED_TOKEN}}"
+      resources:
+        - name: vehicles
+          path: /vehicles
+          description: "Connected vehicle list"
+          operations:
+            - name: list-connected-vehicles
+              method: GET
+              description: "List all connected vehicles registered to the account"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: vehicle-status
+          path: /vehicles/{vin}/status
+          description: "Vehicle real-time status"
+          operations:
+            - name: get-vehicle-status
+              method: GET
+              description: "Get current vehicle status (doors, ignition, windows)"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: status-refresh
+          path: /vehicles/{vin}/status/refresh
+          description: "Refresh vehicle status"
+          operations:
+            - name: refresh-vehicle-status
+              method: POST
+              description: "Wake vehicle and refresh status data"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  deviceId: "{{tools.deviceId}}"
+                  deviceType: "{{tools.deviceType}}"
+                  guid: "{{tools.guid}}"
+                  vin: "{{tools.vin}}"
+        - name: vehicle-health
+          path: /vehicles/{vin}/health
+          description: "Vehicle health diagnostics"
+          operations:
+            - name: get-vehicle-health-status
+              method: GET
+              description: "Get oil level and warning lights"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: vehicle-location
+          path: /vehicles/{vin}/location
+          description: "Vehicle location"
+          operations:
+            - name: get-vehicle-position
+              method: GET
+              description: "Get last known GPS location when parked"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: electric-status
+          path: /vehicles/{vin}/electric
+          description: "EV battery and charging status"
+          operations:
+            - name: get-electric-status
+              method: GET
+              description: "Get EV battery level, range, and charging status"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: electric-refresh
+          path: /vehicles/{vin}/electric/refresh
+          description: "Refresh EV status"
+          operations:
+            - name: refresh-electric-status
+              method: POST
+              description: "Request updated state-of-charge from vehicle"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: climate
+          path: /vehicles/{vin}/climate
+          description: "Climate control status and settings"
+          operations:
+            - name: get-climate-status
+              method: GET
+              description: "Get current climate control settings"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: climate-command
+          path: /vehicles/{vin}/climate/command
+          description: "Remote climate control"
+          operations:
+            - name: send-climate-command
+              method: POST
+              description: "Send climate start/stop command to vehicle"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  command: "{{tools.command}}"
+                  temperature: "{{tools.temperature}}"
+        - name: trips
+          path: /vehicles/{vin}/trips
+          description: "Trip history"
+          operations:
+            - name: get-trips
+              method: GET
+              description: "Get trip history for a date range"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+                - name: fromDate
+                  in: query
+                  type: string
+                  required: true
+                  description: "Start date"
+                - name: toDate
+                  in: query
+                  type: string
+                  required: true
+                  description: "End date"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: notifications
+          path: /vehicles/{vin}/notifications
+          description: "Vehicle notifications"
+          operations:
+            - name: get-vehicle-notifications
+              method: GET
+              description: "Get vehicle alerts and notifications"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: remote-command
+          path: /vehicles/{vin}/remote-command
+          description: "Remote vehicle commands"
+          operations:
+            - name: send-remote-command
+              method: POST
+              description: "Send remote command (lock, unlock, horn, etc.)"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  command: "{{tools.command}}"
+                  beeps: "{{tools.beeps}}"
+        - name: service-history
+          path: /vehicles/{vin}/service-history
+          description: "Vehicle service history"
+          operations:
+            - name: get-service-history
+              method: GET
+              description: "Get service history records"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "VIN"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8101
+      namespace: toyota-connected-api
+      resources:
+        - path: /v1/vehicles
+          name: vehicles
+          description: "Connected vehicles"
+          operations:
+            - method: GET
+              name: list-connected-vehicles
+              description: "List connected vehicles"
+              call: "toyota-connected.list-connected-vehicles"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9101
+      namespace: toyota-connected-mcp
+      transport: http
+      tools:
+        - name: list-connected-vehicles
+          description: "List all Toyota/Lexus connected vehicles registered to the account"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toyota-connected.list-connected-vehicles"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-vehicle-status
+          description: "Get current door, ignition, and window status for a connected vehicle"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-connected.get-vehicle-status"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-vehicle-health
+          description: "Get vehicle health status including oil level and warning lights"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-connected.get-vehicle-health-status"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-vehicle-location
+          description: "Get the last known parking location of a connected vehicle"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-connected.get-vehicle-position"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-ev-status
+          description: "Get battery level, EV range, and charging status for hybrid and EV models"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-connected.get-electric-status"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: start-climate
+          description: "Remotely start climate control for a Toyota/Lexus vehicle"
+          hints:
+            readOnly: false
+            destructive: false
+          call: "toyota-connected.send-climate-command"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: stop-climate
+          description: "Remotely stop climate control for a Toyota/Lexus vehicle"
+          hints:
+            readOnly: false
+            destructive: false
+          call: "toyota-connected.send-climate-command"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-trip-history
+          description: "Get trip history for a connected vehicle over a date range"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toyota-connected.get-trips"
+          with:
+            vin: "tools.vin"
+            fromDate: "tools.fromDate"
+            toDate: "tools.toDate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-notifications
+          description: "Get vehicle alerts, maintenance notifications, and recall messages"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toyota-connected.get-vehicle-notifications"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: lock-vehicle
+          description: "Remotely lock a Toyota/Lexus vehicle"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "toyota-connected.send-remote-command"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: unlock-vehicle
+          description: "Remotely unlock a Toyota/Lexus vehicle"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "toyota-connected.send-remote-command"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-service-history
+          description: "Get dealer service history records for a vehicle"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-connected.get-service-history"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."

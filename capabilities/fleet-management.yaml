@@ -1,0 +1,286 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Toyota Fleet Management"
+  description: "Workflow capability for fleet managers and rental car operators combining Toyota Telematics and Connected Services APIs. Enables vehicle enrollment, health monitoring, location tracking, telemetry analysis, and trip reporting for Toyota fleet operations."
+  tags:
+    - Automotive
+    - Fleet Management
+    - Telematics
+    - Vehicle Health
+    - Connected Car
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      TOYOTA_TELEMATICS_TOKEN: TOYOTA_TELEMATICS_TOKEN
+      TOYOTA_CONNECTED_TOKEN: TOYOTA_CONNECTED_TOKEN
+
+capability:
+  consumes:
+    - import: toyota-telematics
+      location: ./shared/telematics.yaml
+    - import: toyota-connected
+      location: ./shared/connected-services.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: toyota-fleet-api
+      description: "Unified REST API for Toyota fleet management and vehicle monitoring."
+      resources:
+        - path: /v1/vehicles
+          name: vehicles
+          description: "Fleet vehicle management"
+          operations:
+            - method: GET
+              name: list-vehicles
+              description: "List fleet vehicles"
+              call: "toyota-telematics.list-vehicles"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vehicles/{vin}
+          name: vehicle
+          description: "Individual vehicle"
+          operations:
+            - method: GET
+              name: get-vehicle
+              description: "Get vehicle telematics"
+              call: "toyota-telematics.get-vehicle"
+              with:
+                vin: "rest.vin"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vehicles/{vin}/health
+          name: vehicle-health
+          description: "Vehicle health status"
+          operations:
+            - method: GET
+              name: get-vehicle-health
+              description: "Get vehicle health"
+              call: "toyota-telematics.get-vehicle-health"
+              with:
+                vin: "rest.vin"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vehicles/{vin}/telemetry
+          name: vehicle-telemetry
+          description: "Vehicle telemetry"
+          operations:
+            - method: GET
+              name: get-vehicle-telemetry
+              description: "Get vehicle telemetry"
+              call: "toyota-telematics.get-vehicle-telemetry"
+              with:
+                vin: "rest.vin"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vehicles/{vin}/location
+          name: vehicle-location
+          description: "Vehicle location"
+          operations:
+            - method: GET
+              name: get-vehicle-location
+              description: "Get vehicle GPS location"
+              call: "toyota-telematics.get-vehicle-location"
+              with:
+                vin: "rest.vin"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vehicles/{vin}/trips
+          name: vehicle-trips
+          description: "Vehicle trip history"
+          operations:
+            - method: GET
+              name: get-vehicle-trips
+              description: "Get trip history"
+              call: "toyota-telematics.get-vehicle-trips"
+              with:
+                vin: "rest.vin"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vehicles/{vin}/subscriptions
+          name: subscriptions
+          description: "Connected service subscriptions"
+          operations:
+            - method: GET
+              name: get-vehicle-subscriptions
+              description: "Get subscription details"
+              call: "toyota-telematics.get-vehicle-subscriptions"
+              with:
+                vin: "rest.vin"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vehicles/{vin}/status
+          name: vehicle-status
+          description: "Real-time vehicle status"
+          operations:
+            - method: GET
+              name: get-vehicle-status
+              description: "Get current vehicle status"
+              call: "toyota-connected.get-vehicle-status"
+              with:
+                vin: "rest.vin"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vehicles/{vin}/ev-status
+          name: ev-status
+          description: "EV battery and charging"
+          operations:
+            - method: GET
+              name: get-ev-status
+              description: "Get EV battery and charging status"
+              call: "toyota-connected.get-electric-status"
+              with:
+                vin: "rest.vin"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: toyota-fleet-mcp
+      transport: http
+      description: "MCP server for AI-assisted Toyota fleet management and vehicle monitoring."
+      tools:
+        - name: list-fleet-vehicles
+          description: "List all vehicles enrolled in the Toyota telematics fleet program"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toyota-telematics.list-vehicles"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-vehicle
+          description: "Get telematics enrollment details for a specific fleet vehicle by VIN"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-telematics.get-vehicle"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-vehicle-health
+          description: "Get vehicle health status including warning lights and oil level for a fleet vehicle"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-telematics.get-vehicle-health"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-vehicle-telemetry
+          description: "Get odometer, fuel level, and estimated range for a fleet vehicle"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-telematics.get-vehicle-telemetry"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-vehicle-location
+          description: "Get the current GPS coordinates of a fleet vehicle"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-telematics.get-vehicle-location"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-trip-history
+          description: "Get trip history for a fleet vehicle over a specified date range"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toyota-telematics.get-vehicle-trips"
+          with:
+            vin: "tools.vin"
+            fromDate: "tools.fromDate"
+            toDate: "tools.toDate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-vehicle-subscriptions
+          description: "Get connected services and satellite radio subscription status for a vehicle"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-telematics.get-vehicle-subscriptions"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: enroll-fleet-vehicle
+          description: "Enroll a new vehicle in the Toyota telematics fleet program"
+          hints:
+            readOnly: false
+          call: "toyota-telematics.enroll-vehicle"
+          with:
+            fleetId: "tools.fleetId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-vehicle-door-status
+          description: "Get real-time door lock and window status for a connected vehicle"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-connected.get-vehicle-status"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-ev-battery-status
+          description: "Get EV battery percentage, electric range, and charging status for hybrid/EV vehicles"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-connected.get-electric-status"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-vehicle-alerts
+          description: "Get maintenance alerts and vehicle notifications for a connected vehicle"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toyota-connected.get-vehicle-notifications"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-service-history
+          description: "Get dealer service history records for a vehicle"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "toyota-connected.get-service-history"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."

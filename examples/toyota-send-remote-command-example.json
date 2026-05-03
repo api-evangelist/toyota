@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.toyota.com/connected/v1/vehicles/1NXBR32E75Z123456/remote-command",
+    "headers": {
+      "Authorization": "Bearer {token}",
+      "Content-Type": "application/json",
+      "x-correlationid": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "datetime": "2026-05-03T14:05:00Z"
+    },
+    "body": {
+      "command": "lock",
+      "beeps": 1
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "requestId": "req_lock_abc123",
+      "status": "accepted",
+      "returnCode": "000000",
+      "timestamp": "2026-05-03T14:05:02Z"
+    }
+  }
+}

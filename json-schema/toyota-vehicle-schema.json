@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api.toyota.com/schemas/vehicle",
+  "title": "Toyota Vehicle",
+  "description": "A Toyota or Lexus connected vehicle in the Toyota Connected Services platform",
+  "type": "object",
+  "required": ["vin"],
+  "properties": {
+    "vin": {
+      "type": "string",
+      "minLength": 17,
+      "maxLength": 17,
+      "pattern": "^[A-HJ-NPR-Z0-9]{17}$",
+      "description": "17-character Vehicle Identification Number (VIN)"
+    },
+    "alias": {
+      "type": "string",
+      "description": "User-assigned vehicle nickname"
+    },
+    "make": {
+      "type": "string",
+      "enum": ["Toyota", "Lexus"],
+      "description": "Vehicle make"
+    },
+    "model": {
+      "type": "string",
+      "description": "Vehicle model name"
+    },
+    "year": {
+      "type": "integer",
+      "minimum": 1990,
+      "description": "Vehicle model year"
+    },
+    "color": {
+      "type": "string",
+      "description": "Exterior color"
+    },
+    "trim": {
+      "type": "string",
+      "description": "Trim level"
+    },
+    "guid": {
+      "type": "string",
+      "description": "User GUID associated with the vehicle"
+    },
+    "isConnected": {
+      "type": "boolean",
+      "description": "Whether the vehicle is currently connected to Toyota services"
+    },
+    "lastConnectedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last time the vehicle connected to Toyota services"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api.toyota.com/schemas/electric-status",
+  "title": "Toyota Electric Status",
+  "description": "Electric vehicle battery and charging status for Toyota/Lexus hybrid and EV models",
+  "type": "object",
+  "required": ["vin", "batteryLevel"],
+  "properties": {
+    "vin": {
+      "type": "string",
+      "description": "Vehicle Identification Number"
+    },
+    "batteryLevel": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Battery state of charge percentage (0-100)"
+    },
+    "batteryRange": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Estimated electric-only range in miles"
+    },
+    "fuelLevel": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Fuel tank percentage for hybrid models (0-100)"
+    },
+    "fuelRange": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Estimated fuel-based range in miles for hybrid models"
+    },
+    "totalRange": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Combined electric + fuel total range in miles for hybrids"
+    },
+    "chargingStatus": {
+      "type": "string",
+      "enum": ["not_charging", "charging", "fully_charged", "plugged_in"],
+      "description": "Current charging state"
+    },
+    "pluggedIn": {
+      "type": "boolean",
+      "description": "Whether the vehicle is currently plugged in"
+    },
+    "estimatedChargeCompleteTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Estimated time when charging will be complete"
+    },
+    "lastUpdatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the last status update"
+    }
+  }
+}

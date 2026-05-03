@@ -1,0 +1,182 @@
+vocabulary:
+  name: Toyota
+  description: >-
+    Vocabulary for Toyota Motor Corporation's developer APIs covering connected
+    vehicle services, telematics, vehicle lifecycle, dealer management, and
+    electric/hybrid vehicle capabilities.
+  version: 1.0.0
+  created: '2026-05-03'
+  modified: '2026-05-03'
+
+terms:
+  - term: VIN
+    definition: >-
+      Vehicle Identification Number: a unique 17-character alphanumeric code
+      assigned to every motor vehicle. Used as the primary identifier across
+      all Toyota developer APIs to reference specific vehicles.
+    domain: Vehicles
+    tags:
+      - Automotive
+
+  - term: Connected Services
+    definition: >-
+      Toyota's suite of cloud-connected vehicle features that enable remote
+      monitoring and control through Toyota's app and API, including Remote
+      Connect, Safety Connect, Service Connect, and Wi-Fi Connect.
+    domain: Connected Car
+    tags:
+      - Automotive
+      - Connected Car
+
+  - term: Telematics
+    definition: >-
+      The integrated use of telecommunications and vehicle informatics to
+      transmit vehicle data including location, speed, odometer, and health
+      diagnostics to remote servers for fleet management and insurance uses.
+    domain: Telematics
+    tags:
+      - Fleet Management
+      - Insurance
+
+  - term: EV Range
+    definition: >-
+      The estimated distance a Toyota electric or plug-in hybrid vehicle can
+      travel on battery power alone at the current charge level, expressed in miles.
+    domain: Electric Vehicles
+    tags:
+      - Electric Vehicles
+      - Hybrid
+
+  - term: State of Charge
+    definition: >-
+      The current battery charge level of an electric or hybrid vehicle expressed
+      as a percentage from 0% (empty) to 100% (fully charged).
+    domain: Electric Vehicles
+    tags:
+      - Electric Vehicles
+
+  - term: Remote Connect
+    definition: >-
+      Toyota's connected service feature that enables vehicle owners to remotely
+      lock/unlock doors, start the engine, control climate, and check vehicle
+      status through the Toyota app or API.
+    domain: Connected Car
+    tags:
+      - Connected Car
+      - Remote Control
+
+  - term: Safety Connect
+    definition: >-
+      Toyota's emergency response service that provides automatic collision
+      notification, stolen vehicle tracking, roadside assistance, and emergency
+      button functionality via Toyota's telematics platform.
+    domain: Safety
+    tags:
+      - Safety
+      - Connected Car
+
+  - term: Service Connect
+    definition: >-
+      Toyota's vehicle health monitoring service that reports maintenance alerts,
+      warning lights, and scheduling reminders through the Toyota app and API.
+    domain: Maintenance
+    tags:
+      - Maintenance
+      - Vehicle Health
+
+  - term: Fleet Management
+    definition: >-
+      The use of Toyota's telematics and connected services APIs to monitor, track,
+      and manage a commercial fleet of vehicles, including rental car companies,
+      logistics providers, and corporate vehicle fleets.
+    domain: Fleet
+    tags:
+      - Fleet Management
+
+  - term: Plug-in Hybrid
+    definition: >-
+      A Toyota vehicle with both a combustion engine and a rechargeable battery
+      that can run on electric power alone for limited range. Examples include
+      the Toyota Prius Prime and RAV4 Prime.
+    domain: Electric Vehicles
+    tags:
+      - Hybrid
+      - Electric Vehicles
+
+  - term: bZ Series
+    definition: >-
+      Toyota's battery electric vehicle lineup under the "Beyond Zero" brand,
+      including the bZ4X crossover. BEV-only vehicles with no combustion engine.
+    domain: Electric Vehicles
+    tags:
+      - Electric Vehicles
+
+  - term: Climate Pre-conditioning
+    definition: >-
+      The remote activation of a vehicle's heating or air conditioning system
+      before the driver enters the vehicle, accessible via the Toyota Connected
+      Services API climate control endpoints.
+    domain: Connected Car
+    tags:
+      - Connected Car
+      - Comfort
+
+  - term: Unit ID
+    definition: >-
+      The hardware identifier for a vehicle's telematics control unit (TCU),
+      used alongside the VIN to identify enrolled vehicles in Toyota's telematics
+      program.
+    domain: Telematics
+    tags:
+      - Telematics
+
+  - term: Dealer Code
+    definition: >-
+      Toyota's unique identifier for an authorized Toyota or Lexus dealership
+      used in vehicle service records and dealer API queries.
+    domain: Dealers
+    tags:
+      - Dealers
+
+  - term: GUID
+    definition: >-
+      Globally Unique Identifier assigned to a Toyota account user, used in
+      Connected Services API requests to associate actions with a specific account holder.
+    domain: Authentication
+    tags:
+      - Authentication
+
+categories:
+  - name: Vehicle Identity
+    description: Vehicle identification and registration concepts
+    terms:
+      - VIN
+      - Unit ID
+  - name: Connected Services
+    description: Toyota cloud-connected vehicle service concepts
+    terms:
+      - Connected Services
+      - Remote Connect
+      - Safety Connect
+      - Service Connect
+      - Climate Pre-conditioning
+  - name: Electric and Hybrid
+    description: EV and hybrid vehicle concepts
+    terms:
+      - EV Range
+      - State of Charge
+      - Plug-in Hybrid
+      - bZ Series
+  - name: Telematics and Fleet
+    description: Vehicle telematics and fleet management concepts
+    terms:
+      - Telematics
+      - Fleet Management
+  - name: Dealers and Service
+    description: Dealer and service management concepts
+    terms:
+      - Dealer Code
+  - name: Authentication
+    description: Identity and access concepts
+    terms:
+      - GUID

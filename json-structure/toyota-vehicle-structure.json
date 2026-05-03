@@ -1,0 +1,68 @@
+{
+  "title": "Toyota Vehicle Structure",
+  "description": "JSON structure documentation for the Toyota Connected Services Vehicle resource",
+  "resource": "ConnectedVehicle",
+  "api": "Toyota Connected Services",
+  "fields": [
+    {
+      "name": "vin",
+      "type": "string (17 characters)",
+      "required": true,
+      "description": "Vehicle Identification Number, exactly 17 characters, alphanumeric (I, O, Q excluded)"
+    },
+    {
+      "name": "alias",
+      "type": "string",
+      "required": false,
+      "description": "User-assigned nickname for the vehicle"
+    },
+    {
+      "name": "make",
+      "type": "string (enum)",
+      "required": false,
+      "description": "Vehicle make: Toyota or Lexus"
+    },
+    {
+      "name": "model",
+      "type": "string",
+      "required": false,
+      "description": "Vehicle model name (e.g., Camry, Prius, RAV4, Tacoma, bZ4X)"
+    },
+    {
+      "name": "year",
+      "type": "integer",
+      "required": false,
+      "description": "Model year (four digit)"
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "required": false,
+      "description": "Exterior color name"
+    },
+    {
+      "name": "trim",
+      "type": "string",
+      "required": false,
+      "description": "Trim/grade level (e.g., LE, XLE, Limited, TRD)"
+    },
+    {
+      "name": "guid",
+      "type": "string",
+      "required": false,
+      "description": "User GUID associated with the vehicle account"
+    },
+    {
+      "name": "isConnected",
+      "type": "boolean",
+      "required": false,
+      "description": "Whether the vehicle is actively connected to Toyota services"
+    },
+    {
+      "name": "lastConnectedAt",
+      "type": "string (ISO 8601 datetime)",
+      "required": false,
+      "description": "Last datetime the vehicle successfully connected to Toyota services"
+    }
+  ]
+}

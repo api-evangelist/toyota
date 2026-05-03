@@ -1,0 +1,564 @@
+openapi: 3.0.3
+info:
+  title: Toyota Telematics API
+  description: >-
+    Toyota Telematics API provides details related to connected services and
+    satellite radio subscriptions for requested vehicles based on Unit ID or VIN.
+    Includes vehicle health data, odometer readings, connected service subscription
+    status, and telematics-based fleet management capabilities for Toyota North
+    America vehicles.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/apis/telematics
+servers:
+  - url: https://api.eig.toyota.com/telematics/v1
+    description: Toyota Telematics Production API
+tags:
+  - name: Vehicles
+    description: Vehicle telematics enrollment and management
+  - name: Subscriptions
+    description: Connected service and satellite radio subscriptions
+  - name: Health
+    description: Vehicle health and diagnostics
+  - name: Telemetry
+    description: Real-time vehicle telemetry data
+  - name: Fleet
+    description: Fleet vehicle management operations
+paths:
+  /vehicles:
+    get:
+      operationId: listVehicles
+      summary: List Vehicles
+      description: Returns a list of vehicles enrolled in the telematics program.
+      tags:
+        - Vehicles
+      parameters:
+        - name: fleetId
+          in: query
+          schema:
+            type: string
+          description: Filter vehicles by fleet identifier
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive, pending]
+          description: Filter by telematics enrollment status
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 500
+      responses:
+        '200':
+          description: Vehicle list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /vehicles/{vin}:
+    get:
+      operationId: getVehicle
+      summary: Get Vehicle
+      description: Retrieve telematics enrollment details for a specific vehicle by VIN.
+      tags:
+        - Vehicles
+      parameters:
+        - name: vin
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 17
+            maxLength: 17
+          description: 17-character Vehicle Identification Number (VIN)
+      responses:
+        '200':
+          description: Vehicle telematics details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/subscriptions:
+    get:
+      operationId: getVehicleSubscriptions
+      summary: Get Vehicle Subscriptions
+      description: Returns connected service and satellite radio subscription details for a vehicle.
+      tags:
+        - Subscriptions
+        - Vehicles
+      parameters:
+        - name: vin
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Subscription details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleSubscriptions'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/health:
+    get:
+      operationId: getVehicleHealth
+      summary: Get Vehicle Health
+      description: Returns vehicle health status including warning lights, oil level, and maintenance alerts.
+      tags:
+        - Health
+        - Vehicles
+      parameters:
+        - name: vin
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Vehicle health report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleHealth'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/telemetry:
+    get:
+      operationId: getVehicleTelemetry
+      summary: Get Vehicle Telemetry
+      description: Returns current telemetry data including odometer, fuel level, and distance.
+      tags:
+        - Telemetry
+        - Vehicles
+      parameters:
+        - name: vin
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Vehicle telemetry data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleTelemetry'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/location:
+    get:
+      operationId: getVehicleLocation
+      summary: Get Vehicle Location
+      description: Returns the current or last known GPS location of a connected vehicle.
+      tags:
+        - Telemetry
+        - Vehicles
+      parameters:
+        - name: vin
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Vehicle location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleLocation'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/trips:
+    get:
+      operationId: getVehicleTrips
+      summary: Get Vehicle Trips
+      description: Returns trip history for a connected vehicle within a date range.
+      tags:
+        - Telemetry
+        - Vehicles
+      parameters:
+        - name: vin
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Vehicle Identification Number
+        - name: fromDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Start date for trip history
+        - name: toDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: End date for trip history
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 50
+          description: Maximum number of trips to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Pagination offset
+        - name: includeRoute
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Include GPS route coordinates for each trip
+      responses:
+        '200':
+          description: Trip history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripList'
+  /fleet/{fleetId}/vehicles:
+    get:
+      operationId: listFleetVehicles
+      summary: List Fleet Vehicles
+      description: Returns all vehicles enrolled in a specific fleet.
+      tags:
+        - Fleet
+        - Vehicles
+      parameters:
+        - name: fleetId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Fleet identifier
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive, pending]
+          description: Filter by status
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        '200':
+          description: Fleet vehicles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /fleet/{fleetId}/vehicles/enroll:
+    post:
+      operationId: enrollVehicle
+      summary: Enroll Vehicle
+      description: Enroll a vehicle in the telematics fleet program.
+      tags:
+        - Fleet
+        - Vehicles
+      parameters:
+        - name: fleetId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Fleet identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleEnrollmentRequest'
+      responses:
+        '201':
+          description: Vehicle enrolled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Vehicle or resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Vehicle:
+      type: object
+      properties:
+        vin:
+          type: string
+          description: Vehicle Identification Number
+        unitId:
+          type: string
+          description: Telematics unit identifier
+        make:
+          type: string
+          description: Vehicle make (Toyota, Lexus)
+        model:
+          type: string
+        year:
+          type: integer
+        color:
+          type: string
+        trim:
+          type: string
+        enrollmentStatus:
+          type: string
+          enum: [active, inactive, pending]
+        fleetId:
+          type: string
+        enrolledAt:
+          type: string
+          format: date-time
+    VehicleList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    VehicleSubscriptions:
+      type: object
+      properties:
+        vin:
+          type: string
+        connectedServices:
+          type: array
+          items:
+            type: object
+            properties:
+              serviceType:
+                type: string
+                description: Type of connected service
+              status:
+                type: string
+                enum: [active, expired, trial, cancelled]
+              effectiveDate:
+                type: string
+                format: date
+              terminationDate:
+                type: string
+                format: date
+        satelliteRadio:
+          type: object
+          properties:
+            provider:
+              type: string
+            status:
+              type: string
+              enum: [active, expired, trial, cancelled]
+            effectiveDate:
+              type: string
+              format: date
+            terminationDate:
+              type: string
+              format: date
+    VehicleHealth:
+      type: object
+      properties:
+        vin:
+          type: string
+        overallStatus:
+          type: string
+          enum: [good, warning, critical]
+        oilLevel:
+          type: string
+          enum: [ok, low, critical]
+        warnings:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
+              severity:
+                type: string
+                enum: [info, warning, critical]
+        maintenanceDue:
+          type: boolean
+        nextMaintenanceMiles:
+          type: integer
+        lastReportedAt:
+          type: string
+          format: date-time
+    VehicleTelemetry:
+      type: object
+      properties:
+        vin:
+          type: string
+        odometer:
+          type: number
+          description: Odometer reading in miles
+        fuelLevel:
+          type: integer
+          description: Fuel percentage (0-100)
+        distanceSinceLastRefuel:
+          type: number
+          description: Miles driven since last refuel
+        estimatedRange:
+          type: number
+          description: Estimated range remaining in miles
+        lastReportedAt:
+          type: string
+          format: date-time
+    VehicleLocation:
+      type: object
+      properties:
+        vin:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        heading:
+          type: integer
+          description: Vehicle heading in degrees (0-359)
+        speed:
+          type: number
+          description: Vehicle speed in mph
+        isParked:
+          type: boolean
+        timestamp:
+          type: string
+          format: date-time
+    Trip:
+      type: object
+      properties:
+        id:
+          type: string
+        vin:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        distanceMiles:
+          type: number
+        startLocation:
+          $ref: '#/components/schemas/TripLocation'
+        endLocation:
+          $ref: '#/components/schemas/TripLocation'
+        route:
+          type: array
+          items:
+            $ref: '#/components/schemas/TripLocation'
+          description: GPS coordinates along the trip route
+    TripLocation:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        timestamp:
+          type: string
+          format: date-time
+    TripList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trip'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+    VehicleEnrollmentRequest:
+      type: object
+      required:
+        - vin
+      properties:
+        vin:
+          type: string
+          minLength: 17
+          maxLength: 17
+          description: Vehicle Identification Number
+        unitId:
+          type: string
+          description: Telematics unit identifier (if known)
+        services:
+          type: array
+          items:
+            type: string
+          description: List of data services to subscribe to
+security:
+  - bearerAuth: []

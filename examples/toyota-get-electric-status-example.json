@@ -1,0 +1,27 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.toyota.com/connected/v1/vehicles/1NXBR32E75Z123456/electric",
+    "headers": {
+      "Authorization": "Bearer {token}",
+      "Content-Type": "application/json",
+      "x-correlationid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "datetime": "2026-05-03T14:00:00Z"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "vin": "1NXBR32E75Z123456",
+      "batteryLevel": 78,
+      "batteryRange": 31.2,
+      "fuelLevel": 85,
+      "fuelRange": 412.5,
+      "totalRange": 443.7,
+      "chargingStatus": "not_charging",
+      "pluggedIn": false,
+      "estimatedChargeCompleteTime": null,
+      "lastUpdatedAt": "2026-05-03T12:45:00Z"
+    }
+  }
+}
