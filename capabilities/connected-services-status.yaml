@@ -1,0 +1,168 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Toyota Connected Services API — Status
+  description: 'Toyota Connected Services API — Status. 3 operations. Lead operation: Get Vehicle Health Status. Self-contained
+    Naftiko capability covering one Toyota business surface.'
+  tags:
+  - Toyota
+  - Status
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOYOTA_API_KEY: TOYOTA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: connected-services-status
+    baseUri: https://api.toyota.com/connected/v1
+    description: Toyota Connected Services API — Status business capability. Self-contained, no shared references.
+    resources:
+    - name: vehicles-vin-health
+      path: /vehicles/{vin}/health
+      operations:
+      - name: getvehiclehealthstatus
+        method: GET
+        description: Get Vehicle Health Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: vin
+          in: path
+          type: string
+          required: true
+    - name: vehicles-vin-status
+      path: /vehicles/{vin}/status
+      operations:
+      - name: getvehiclestatus
+        method: GET
+        description: Get Vehicle Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: vin
+          in: path
+          type: string
+          required: true
+    - name: vehicles-vin-status-refresh
+      path: /vehicles/{vin}/status/refresh
+      operations:
+      - name: refreshvehiclestatus
+        method: POST
+        description: Refresh Vehicle Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: vin
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TOYOTA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: connected-services-status-rest
+    port: 8080
+    description: REST adapter for Toyota Connected Services API — Status. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/vehicles/{vin}/health
+      name: vehicles-vin-health
+      description: REST surface for vehicles-vin-health.
+      operations:
+      - method: GET
+        name: getvehiclehealthstatus
+        description: Get Vehicle Health Status
+        call: connected-services-status.getvehiclehealthstatus
+        with:
+          vin: rest.vin
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/vehicles/{vin}/status
+      name: vehicles-vin-status
+      description: REST surface for vehicles-vin-status.
+      operations:
+      - method: GET
+        name: getvehiclestatus
+        description: Get Vehicle Status
+        call: connected-services-status.getvehiclestatus
+        with:
+          vin: rest.vin
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/vehicles/{vin}/status/refresh
+      name: vehicles-vin-status-refresh
+      description: REST surface for vehicles-vin-status-refresh.
+      operations:
+      - method: POST
+        name: refreshvehiclestatus
+        description: Refresh Vehicle Status
+        call: connected-services-status.refreshvehiclestatus
+        with:
+          vin: rest.vin
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: connected-services-status-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Toyota Connected Services API — Status. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-vehicle-health-status
+      description: Get Vehicle Health Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: connected-services-status.getvehiclehealthstatus
+      with:
+        vin: tools.vin
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-vehicle-status
+      description: Get Vehicle Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: connected-services-status.getvehiclestatus
+      with:
+        vin: tools.vin
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: refresh-vehicle-status
+      description: Refresh Vehicle Status
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: connected-services-status.refreshvehiclestatus
+      with:
+        vin: tools.vin
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

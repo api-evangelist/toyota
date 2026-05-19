@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Toyota Connected Services API — History
+  description: 'Toyota Connected Services API — History. 1 operations. Lead operation: Get Service History. Self-contained
+    Naftiko capability covering one Toyota business surface.'
+  tags:
+  - Toyota
+  - History
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOYOTA_API_KEY: TOYOTA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: connected-services-history
+    baseUri: https://api.toyota.com/connected/v1
+    description: Toyota Connected Services API — History business capability. Self-contained, no shared references.
+    resources:
+    - name: vehicles-vin-service-history
+      path: /vehicles/{vin}/service-history
+      operations:
+      - name: getservicehistory
+        method: GET
+        description: Get Service History
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: vin
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TOYOTA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: connected-services-history-rest
+    port: 8080
+    description: REST adapter for Toyota Connected Services API — History. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/vehicles/{vin}/service-history
+      name: vehicles-vin-service-history
+      description: REST surface for vehicles-vin-service-history.
+      operations:
+      - method: GET
+        name: getservicehistory
+        description: Get Service History
+        call: connected-services-history.getservicehistory
+        with:
+          vin: rest.vin
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: connected-services-history-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Toyota Connected Services API — History. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-service-history
+      description: Get Service History
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: connected-services-history.getservicehistory
+      with:
+        vin: tools.vin
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Toyota Connected Services API — Location
+  description: 'Toyota Connected Services API — Location. 1 operations. Lead operation: Get Vehicle Location. Self-contained
+    Naftiko capability covering one Toyota business surface.'
+  tags:
+  - Toyota
+  - Location
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOYOTA_API_KEY: TOYOTA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: connected-services-location
+    baseUri: https://api.toyota.com/connected/v1
+    description: Toyota Connected Services API — Location business capability. Self-contained, no shared references.
+    resources:
+    - name: vehicles-vin-location
+      path: /vehicles/{vin}/location
+      operations:
+      - name: getvehicleposition
+        method: GET
+        description: Get Vehicle Location
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: vin
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TOYOTA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: connected-services-location-rest
+    port: 8080
+    description: REST adapter for Toyota Connected Services API — Location. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/vehicles/{vin}/location
+      name: vehicles-vin-location
+      description: REST surface for vehicles-vin-location.
+      operations:
+      - method: GET
+        name: getvehicleposition
+        description: Get Vehicle Location
+        call: connected-services-location.getvehicleposition
+        with:
+          vin: rest.vin
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: connected-services-location-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Toyota Connected Services API — Location. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-vehicle-location
+      description: Get Vehicle Location
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: connected-services-location.getvehicleposition
+      with:
+        vin: tools.vin
+      outputParameters:
+      - type: object
+        mapping: $.
