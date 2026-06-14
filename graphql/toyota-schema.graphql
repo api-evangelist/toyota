@@ -1,0 +1,902 @@
+"""
+Toyota Motor GraphQL Schema
+Conceptual schema covering the Toyota Developer Portal connected vehicle and telematics APIs.
+Sources: developer.eig.toyota.com (Vehicle, Telematics, Connected Services, Dealers APIs)
+"""
+
+# ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum BrandEnum {
+  TOYOTA
+  LEXUS
+}
+
+enum DrivetrainType {
+  FWD
+  RWD
+  AWD
+  FOUR_WD
+}
+
+enum FuelType {
+  GASOLINE
+  HYBRID
+  PLUG_IN_HYBRID
+  ELECTRIC
+  HYDROGEN
+}
+
+enum IgnitionState {
+  OFF
+  ON
+  ACC
+  START
+  REMOTE_START
+}
+
+enum DoorLockState {
+  LOCKED
+  UNLOCKED
+  UNKNOWN
+}
+
+enum WindowState {
+  CLOSED
+  OPEN
+  PARTIALLY_OPEN
+  UNKNOWN
+}
+
+enum TrunkState {
+  CLOSED
+  OPEN
+  UNKNOWN
+}
+
+enum HoodState {
+  CLOSED
+  OPEN
+  UNKNOWN
+}
+
+enum PlugState {
+  PLUGGED_IN
+  UNPLUGGED
+  UNKNOWN
+}
+
+enum ChargeState {
+  CHARGING
+  FULLY_CHARGED
+  NOT_CHARGING
+  SCHEDULED
+  FAULT
+  UNKNOWN
+}
+
+enum ParkingBrakeState {
+  ENGAGED
+  DISENGAGED
+  UNKNOWN
+}
+
+enum MaintenanceAlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum DealerServiceType {
+  SALES
+  SERVICE
+  PARTS
+  COLLISION
+  CERTIFIED_USED
+}
+
+enum UnlockZoneEnum {
+  ALL
+  DRIVER
+  PASSENGER
+  REAR
+}
+
+enum WebhookEvent {
+  VEHICLE_STATUS_CHANGED
+  LOCATION_UPDATED
+  CHARGE_STATUS_CHANGED
+  MAINTENANCE_ALERT
+  DOOR_STATUS_CHANGED
+  REMOTE_COMMAND_RESULT
+}
+
+# ─── Scalars ──────────────────────────────────────────────────────────────────
+
+scalar DateTime
+scalar Date
+scalar GeoJSON
+
+# ─── Vehicle Core ─────────────────────────────────────────────────────────────
+
+"""A VIN (Vehicle Identification Number) value object."""
+type VIN {
+  value: String!
+  wmi: String
+  vds: String
+  vis: String
+  valid: Boolean!
+}
+
+"""Canonical vehicle record representing a Toyota or Lexus vehicle."""
+type Vehicle {
+  vin: VIN!
+  brand: BrandEnum!
+  model: Model!
+  trim: Trim
+  year: Year!
+  engine: Engine
+  battery: Battery
+  drivetrain: Drivetrain
+  exteriorColor: Color
+  interiorColor: Color
+  enrolledInConnectedServices: Boolean!
+  connectedServicesPackage: ConnectedServicesPackage
+}
+
+"""A connected vehicle with real-time status and remote control capabilities."""
+type ConnectedVehicle {
+  vin: VIN!
+  vehicle: Vehicle!
+  status: VehicleStatus!
+  location: EnhancedLocation
+  health: VehicleHealth
+  evRange: EVRange
+  hybridRange: HybridRange
+  lastUpdated: DateTime!
+}
+
+"""Toyota-branded vehicle with Toyota-specific fields."""
+type ToyotaVehicle {
+  vin: VIN!
+  modelCode: String
+  gradeName: String
+  packageCode: String
+  plant: String
+  orderStatus: String
+  retailStatus: String
+  vehicle: Vehicle!
+}
+
+"""Lexus-branded vehicle with Lexus-specific fields."""
+type LexusVehicle {
+  vin: VIN!
+  fSportPackage: Boolean
+  lexusPlusPkg: Boolean
+  vehicle: Vehicle!
+}
+
+"""Vehicle model definition."""
+type Model {
+  code: String!
+  name: String!
+  brand: BrandEnum!
+  segment: String
+  bodyStyle: String
+  fuelType: FuelType!
+}
+
+"""Vehicle trim level."""
+type Trim {
+  code: String!
+  name: String!
+  msrp: Float
+  features: [String!]
+}
+
+"""Model year."""
+type Year {
+  value: Int!
+}
+
+"""Engine specification."""
+type Engine {
+  type: String
+  displacement: Float
+  cylinders: Int
+  horsepower: Int
+  torque: Int
+  fuelType: FuelType!
+}
+
+"""High-voltage or 12V battery specification."""
+type Battery {
+  type: String
+  capacityKWh: Float
+  nominalVoltage: Float
+  warrantyYears: Int
+}
+
+"""Drivetrain configuration."""
+type Drivetrain {
+  type: DrivetrainType!
+  transmission: String
+  gears: Int
+}
+
+"""Vehicle color option."""
+type Color {
+  code: String!
+  name: String!
+  hex: String
+  premium: Boolean
+}
+
+# ─── Vehicle Status ────────────────────────────────────────────────────────────
+
+"""Snapshot of the vehicle's current state."""
+type VehicleStatus {
+  vin: String!
+  ignition: IgnitionStatus!
+  doors: DoorLockStatus!
+  windows: WindowStatus!
+  trunk: TrunkStatus!
+  hood: HoodStatus!
+  fuel: FuelLevel
+  odometer: OdoReading!
+  battery: BatteryLevel
+  plug: PlugStatus
+  charge: ChargeStatus
+  hvac: HVAC
+  parkingBrake: ParkingBrake!
+  capturedAt: DateTime!
+}
+
+"""Ignition state."""
+type IgnitionStatus {
+  state: IgnitionState!
+  changedAt: DateTime
+}
+
+"""Door lock state for each door."""
+type DoorLockStatus {
+  driverFront: DoorLockState!
+  passengerFront: DoorLockState!
+  driverRear: DoorLockState!
+  passengerRear: DoorLockState!
+  allLocked: Boolean!
+}
+
+"""Window state for each window."""
+type WindowStatus {
+  driverFront: WindowState!
+  passengerFront: WindowState!
+  driverRear: WindowState!
+  passengerRear: WindowState!
+}
+
+"""Trunk/liftgate state."""
+type TrunkStatus {
+  state: TrunkState!
+}
+
+"""Hood state."""
+type HoodStatus {
+  state: HoodState!
+}
+
+"""Fuel level reading."""
+type FuelLevel {
+  percentage: Float!
+  estimatedRangeMiles: Float
+  distanceTillEmptyMiles: Float
+  capturedAt: DateTime!
+}
+
+"""Odometer reading."""
+type OdoReading {
+  miles: Float!
+  kilometers: Float!
+  capturedAt: DateTime!
+}
+
+# ─── EV / Hybrid ──────────────────────────────────────────────────────────────
+
+"""High-voltage battery state of charge."""
+type BatteryLevel {
+  stateOfChargePercent: Float!
+  estimatedRangeEVMiles: Float
+  capturedAt: DateTime!
+}
+
+"""EV plug connection state."""
+type PlugStatus {
+  state: PlugState!
+  connectorType: String
+  capturedAt: DateTime!
+}
+
+"""EV charging state."""
+type ChargeStatus {
+  state: ChargeState!
+  chargeRateKW: Float
+  estimatedFullChargeMinutes: Int
+  capturedAt: DateTime!
+}
+
+"""User EV charge preferences."""
+type ChargeSettings {
+  vin: String!
+  targetChargePercent: Int!
+  chargeOnlyAtHome: Boolean!
+  departureTime: String
+  updatedAt: DateTime!
+}
+
+"""Scheduled charge window."""
+type ChargingSchedule {
+  vin: String!
+  enabled: Boolean!
+  days: [String!]!
+  startTime: String!
+  endTime: String!
+  targetChargePercent: Int
+}
+
+"""Estimated EV range."""
+type EVRange {
+  estimatedMiles: Float!
+  batteryPercent: Float!
+  capturedAt: DateTime!
+}
+
+"""Estimated hybrid range (combined EV + fuel)."""
+type HybridRange {
+  evMiles: Float!
+  fuelMiles: Float!
+  totalMiles: Float!
+  capturedAt: DateTime!
+}
+
+# ─── Climate / HVAC ───────────────────────────────────────────────────────────
+
+"""Current HVAC system state."""
+type HVAC {
+  active: Boolean!
+  setTemperatureCelsius: Float
+  currentTemperatureCelsius: Float
+  fanSpeed: Int
+  defrostFront: Boolean
+  defrostRear: Boolean
+}
+
+"""Climate control command result."""
+type ClimateControl {
+  vin: String!
+  requestId: String!
+  targetTemperatureCelsius: Float!
+  submitted: Boolean!
+  submittedAt: DateTime!
+}
+
+# ─── Remote Control ───────────────────────────────────────────────────────────
+
+"""Remote engine start result."""
+type RemoteStart {
+  vin: String!
+  requestId: String!
+  accepted: Boolean!
+  expiresAt: DateTime
+  submittedAt: DateTime!
+}
+
+"""Generic remote command envelope."""
+type Remote {
+  vin: String!
+  requestId: String!
+  command: String!
+  accepted: Boolean!
+  submittedAt: DateTime!
+  completedAt: DateTime
+  resultCode: String
+}
+
+"""Door lock command result."""
+type Lock {
+  vin: String!
+  requestId: String!
+  accepted: Boolean!
+  submittedAt: DateTime!
+}
+
+"""Door unlock command result."""
+type Unlock {
+  vin: String!
+  requestId: String!
+  zone: UnlockZoneEnum!
+  accepted: Boolean!
+  submittedAt: DateTime!
+}
+
+"""Parking brake state."""
+type ParkingBrake {
+  state: ParkingBrakeState!
+  capturedAt: DateTime!
+}
+
+# ─── Location / Navigation ────────────────────────────────────────────────────
+
+"""Enhanced vehicle location with heading and speed."""
+type EnhancedLocation {
+  gps: GPSLocation!
+  headingDegrees: Float
+  speedMph: Float
+  altitude: Float
+  capturedAt: DateTime!
+}
+
+"""Raw GPS coordinates."""
+type GPSLocation {
+  latitude: Float!
+  longitude: Float!
+  accuracyMeters: Float
+}
+
+"""A navigation route computed by the vehicle's head unit."""
+type NavigationRoute {
+  vin: String!
+  origin: GPSLocation!
+  destination: GPSLocation!
+  waypoints: [GPSLocation!]
+  distanceMiles: Float
+  estimatedDurationMinutes: Int
+  createdAt: DateTime!
+}
+
+# ─── Telematics / History ─────────────────────────────────────────────────────
+
+"""A single recorded trip."""
+type Trip {
+  tripId: String!
+  vin: String!
+  startedAt: DateTime!
+  endedAt: DateTime!
+  distanceMiles: Float!
+  durationMinutes: Int!
+  startLocation: GPSLocation
+  endLocation: GPSLocation
+  averageSpeedMph: Float
+  maxSpeedMph: Float
+  hardBrakeEvents: Int
+  rapidAccelerationEvents: Int
+}
+
+"""Detailed trip record with per-segment data."""
+type TripRecord {
+  trip: Trip!
+  segments: [GPSLocation!]
+  fuelConsumedGallons: Float
+  energyConsumedKWh: Float
+}
+
+"""Aggregated trip summary for a period."""
+type TripSummary {
+  vin: String!
+  periodStart: Date!
+  periodEnd: Date!
+  totalTrips: Int!
+  totalMiles: Float!
+  totalDurationMinutes: Int!
+  averageMPG: Float
+  averageMilesPerKWh: Float
+}
+
+"""Aggregated drive history."""
+type DriveHistory {
+  vin: String!
+  trips: [Trip!]!
+  summary: TripSummary!
+}
+
+"""Historical fuel fill-up and consumption records."""
+type FuelHistory {
+  vin: String!
+  records: [FuelRecord!]!
+}
+
+type FuelRecord {
+  date: Date!
+  gallonsFilled: Float
+  pricePerGallon: Float
+  odometerMiles: Float
+  mpgSinceLastFill: Float
+}
+
+"""Historical EV/hybrid energy usage."""
+type EnergyHistory {
+  vin: String!
+  records: [EnergyRecord!]!
+}
+
+type EnergyRecord {
+  date: Date!
+  kWhConsumed: Float!
+  kWhRegen: Float
+  milesElectric: Float
+  milesGas: Float
+}
+
+# ─── Maintenance / Health ─────────────────────────────────────────────────────
+
+"""A maintenance reminder or alert."""
+type MaintenanceAlert {
+  alertId: String!
+  vin: String!
+  type: String!
+  message: String!
+  severity: MaintenanceAlertSeverity!
+  dueMiles: Float
+  dueDate: Date
+  createdAt: DateTime!
+}
+
+"""Engine oil life reading."""
+type OilLife {
+  vin: String!
+  remainingPercent: Float!
+  estimatedChangeDueMiles: Float
+  capturedAt: DateTime!
+}
+
+"""Tire pressure readings per corner."""
+type TirePressure {
+  vin: String!
+  frontLeftPSI: Float!
+  frontRightPSI: Float!
+  rearLeftPSI: Float!
+  rearRightPSI: Float!
+  sparePSI: Float
+  recommendedPSI: Float!
+  capturedAt: DateTime!
+}
+
+"""NHTSA safety recall record."""
+type Recall {
+  recallNumber: String!
+  vin: String!
+  component: String!
+  summary: String!
+  remedy: String
+  openDate: Date!
+  completedDate: Date
+  status: String!
+}
+
+"""Diagnostic trouble code from the vehicle OBD system."""
+type DTCCode {
+  code: String!
+  description: String!
+  severity: String
+  system: String
+  capturedAt: DateTime!
+}
+
+"""Comprehensive vehicle health snapshot."""
+type VehicleHealth {
+  vin: String!
+  oilLife: OilLife
+  tirePressure: TirePressure
+  activeDTCs: [DTCCode!]
+  openRecalls: [Recall!]
+  serviceReminders: [ServiceReminder!]
+  overallScore: Int
+  capturedAt: DateTime!
+}
+
+"""An upcoming or overdue service reminder."""
+type ServiceReminder {
+  reminderId: String!
+  vin: String!
+  serviceType: String!
+  message: String!
+  dueDate: Date
+  dueMiles: Float
+  overdue: Boolean!
+}
+
+# ─── Dealer ───────────────────────────────────────────────────────────────────
+
+"""Toyota/Lexus dealer information."""
+type Dealer {
+  dealerCode: String!
+  name: String!
+  brand: BrandEnum!
+  address: String!
+  city: String!
+  state: String!
+  zip: String!
+  latitude: Float
+  longitude: Float
+  phone: String
+  website: String
+  hours: [DealerHours!]
+  services: [DealerServiceType!]!
+  distanceMiles: Float
+}
+
+type DealerHours {
+  dayOfWeek: String!
+  openTime: String
+  closeTime: String
+  closed: Boolean!
+}
+
+"""Result of a dealer proximity search."""
+type DealerLocator {
+  searchZip: String!
+  radiusMiles: Int!
+  brand: BrandEnum
+  dealers: [Dealer!]!
+  totalCount: Int!
+}
+
+"""Past dealer service visit record."""
+type ServiceHistory {
+  vin: String!
+  visits: [ServiceVisit!]!
+}
+
+type ServiceVisit {
+  visitId: String!
+  dealer: Dealer!
+  date: Date!
+  mileage: Float!
+  servicesPerformed: [String!]!
+  technicianNotes: String
+  warrantyRepair: Boolean
+  totalCost: Float
+}
+
+"""A scheduled dealer service appointment."""
+type ServiceAppointment {
+  appointmentId: String!
+  vin: String!
+  dealer: Dealer!
+  scheduledAt: DateTime!
+  serviceTypes: [String!]!
+  customerNotes: String
+  confirmationNumber: String!
+  status: String!
+}
+
+# ─── Connected Services ────────────────────────────────────────────────────────
+
+"""Enrolled connected services subscription for a vehicle."""
+type ConnectedServicesPackage {
+  vin: String!
+  packageName: String!
+  brand: BrandEnum!
+  active: Boolean!
+  activationDate: Date!
+  expirationDate: Date
+  features: [String!]!
+  safetyConnect: SafetyConnect
+}
+
+# ─── Safety ───────────────────────────────────────────────────────────────────
+
+"""Safety feature enablement summary."""
+type Safety {
+  vin: String!
+  tssEnabled: Boolean
+  preSenseEnabled: Boolean
+  laneAssistEnabled: Boolean
+  autoHighBeamEnabled: Boolean
+  adaptiveCruiseEnabled: Boolean
+}
+
+"""Toyota Safety Connect subscription and status."""
+type SafetyConnect {
+  enrolled: Boolean!
+  packageName: String!
+  expirationDate: Date
+  sosAvailable: Boolean!
+  emergencyAssistAvailable: Boolean!
+  stolenVehicleLocateAvailable: Boolean!
+  automaticCollisionNotificationAvailable: Boolean!
+}
+
+"""Emergency SOS event or request record."""
+type Emergency {
+  eventId: String!
+  vin: String!
+  type: String!
+  location: GPSLocation!
+  triggeredAt: DateTime!
+  respondedAt: DateTime
+  resolved: Boolean!
+}
+
+"""Night vision camera status (Lexus LS/LC)."""
+type NightVision {
+  vin: String!
+  enabled: Boolean!
+  pedestrianDetection: Boolean!
+  capturedAt: DateTime!
+}
+
+"""Blind spot monitoring status."""
+type BlindSpot {
+  vin: String!
+  bsmEnabled: Boolean!
+  rearCrossTrafficAlertEnabled: Boolean!
+  capturedAt: DateTime!
+}
+
+"""Toyota Safety Connect feature entitlements."""
+type ToytaSafetyConnect {
+  vin: String!
+  enrolled: Boolean!
+  sosButton: Boolean!
+  automaticCollisionNotification: Boolean!
+  enhancedRoadsideAssistance: Boolean!
+  stolenVehicleLocate: Boolean!
+  expirationDate: Date
+}
+
+# ─── Auth / Platform ───────────────────────────────────────────────────────────
+
+"""API key issued to an application through the Toyota Developer Portal."""
+type APIKey {
+  keyId: String!
+  name: String!
+  prefix: String!
+  scopes: [String!]!
+  createdAt: DateTime!
+  expiresAt: DateTime
+  active: Boolean!
+}
+
+"""OAuth 2.0 access token."""
+type Token {
+  accessToken: String!
+  tokenType: String!
+  expiresIn: Int!
+  scope: String!
+  issuedAt: DateTime!
+}
+
+"""Webhook subscription for vehicle event notifications."""
+type Webhook {
+  webhookId: String!
+  url: String!
+  events: [WebhookEvent!]!
+  vinFilter: [String!]
+  active: Boolean!
+  secret: String
+  createdAt: DateTime!
+  lastTriggeredAt: DateTime
+}
+
+# ─── Input Types ──────────────────────────────────────────────────────────────
+
+input RemoteStartInput {
+  durationMinutes: Int
+  climatePreCondition: Boolean
+  targetTemperatureCelsius: Float
+}
+
+input ClimateControlInput {
+  targetTemperatureCelsius: Float!
+  fanSpeed: Int
+  defrostFront: Boolean
+  defrostRear: Boolean
+}
+
+input ChargeSettingsInput {
+  targetChargePercent: Int!
+  chargeOnlyAtHome: Boolean
+  departureTime: String
+}
+
+input ChargingScheduleInput {
+  enabled: Boolean!
+  days: [String!]!
+  startTime: String!
+  endTime: String!
+  targetChargePercent: Int
+}
+
+input ServiceAppointmentInput {
+  vin: String!
+  dealerCode: String!
+  preferredDate: Date!
+  serviceTypes: [String!]!
+  customerNotes: String
+}
+
+# ─── Root Operations ───────────────────────────────────────────────────────────
+
+type Query {
+  """Retrieve a vehicle record by VIN."""
+  vehicle(vin: String!): Vehicle
+
+  """Real-time status and remote capabilities for an enrolled connected vehicle."""
+  connectedVehicle(vin: String!): ConnectedVehicle
+
+  """Current vehicle state snapshot."""
+  vehicleStatus(vin: String!): VehicleStatus
+
+  """Current GPS location and heading."""
+  vehicleLocation(vin: String!): EnhancedLocation
+
+  """Paginated list of recorded trips."""
+  tripHistory(vin: String!, limit: Int, offset: Int): [Trip!]
+
+  """Fuel consumption history over the last N days."""
+  fuelHistory(vin: String!, days: Int): FuelHistory
+
+  """EV/hybrid energy usage history over the last N days."""
+  energyHistory(vin: String!, days: Int): EnergyHistory
+
+  """Active maintenance reminders and alerts."""
+  maintenanceAlerts(vin: String!): [MaintenanceAlert!]
+
+  """DTC codes, oil life, tire pressure, and recall status."""
+  vehicleHealth(vin: String!): VehicleHealth
+
+  """Single dealer by Toyota dealer code."""
+  dealer(dealerCode: String!): Dealer
+
+  """Find dealers near a zip code."""
+  dealerLocator(zip: String!, radius: Int, brand: BrandEnum): DealerLocator
+
+  """Past service appointments recorded in the Toyota dealer network."""
+  serviceHistory(vin: String!): ServiceHistory
+
+  """Open safety recalls for a vehicle."""
+  recalls(vin: String!): [Recall!]
+
+  """Estimated EV and hybrid range based on current battery and fuel."""
+  evRange(vin: String!): EVRange
+
+  """Enrolled connected services subscription status."""
+  connectedServicesPackage(vin: String!): ConnectedServicesPackage
+}
+
+type Mutation {
+  """Send a remote engine start command."""
+  remoteStart(vin: String!, input: RemoteStartInput!): RemoteStart
+
+  """Lock all doors remotely."""
+  lock(vin: String!): Lock
+
+  """Unlock doors remotely by zone."""
+  unlock(vin: String!, zone: UnlockZoneEnum): Unlock
+
+  """Pre-condition cabin temperature."""
+  setClimateControl(vin: String!, input: ClimateControlInput!): ClimateControl
+
+  """Update EV charge preferences."""
+  setChargeSettings(vin: String!, input: ChargeSettingsInput!): ChargeSettings
+
+  """Set a timed EV charge schedule."""
+  scheduleCharge(vin: String!, input: ChargingScheduleInput!): ChargingSchedule
+
+  """Schedule a dealer service appointment."""
+  bookServiceAppointment(input: ServiceAppointmentInput!): ServiceAppointment
+}
+
+type Subscription {
+  """Real-time push when vehicle state changes."""
+  vehicleStatusChanged(vin: String!): VehicleStatus
+
+  """Live location stream while vehicle is active."""
+  locationUpdated(vin: String!): EnhancedLocation
+
+  """EV charge state changes."""
+  chargingStatusChanged(vin: String!): ChargeStatus
+
+  """New maintenance or health alerts."""
+  maintenanceAlertTriggered(vin: String!): MaintenanceAlert
+}
