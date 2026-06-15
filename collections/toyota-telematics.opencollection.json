@@ -1,0 +1,293 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toyota Telematics API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Vehicles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.eig.toyota.com/telematics/v1/vehicles",
+            "params": [
+              {
+                "name": "fleetId",
+                "value": "",
+                "type": "query",
+                "description": "Filter vehicles by fleet identifier"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by telematics enrollment status"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of vehicles enrolled in the telematics program."
+        },
+        {
+          "info": {
+            "name": "Get Vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.eig.toyota.com/telematics/v1/vehicles/:vin",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path",
+                "description": "17-character Vehicle Identification Number (VIN)"
+              }
+            ]
+          },
+          "docs": "Retrieve telematics enrollment details for a specific vehicle by VIN."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vehicle Subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.eig.toyota.com/telematics/v1/vehicles/:vin/subscriptions",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path",
+                "description": "Vehicle Identification Number"
+              }
+            ]
+          },
+          "docs": "Returns connected service and satellite radio subscription details for a vehicle."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vehicle Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.eig.toyota.com/telematics/v1/vehicles/:vin/health",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path",
+                "description": "Vehicle Identification Number"
+              }
+            ]
+          },
+          "docs": "Returns vehicle health status including warning lights, oil level, and maintenance alerts."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Telemetry",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vehicle Telemetry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.eig.toyota.com/telematics/v1/vehicles/:vin/telemetry",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path",
+                "description": "Vehicle Identification Number"
+              }
+            ]
+          },
+          "docs": "Returns current telemetry data including odometer, fuel level, and distance."
+        },
+        {
+          "info": {
+            "name": "Get Vehicle Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.eig.toyota.com/telematics/v1/vehicles/:vin/location",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path",
+                "description": "Vehicle Identification Number"
+              }
+            ]
+          },
+          "docs": "Returns the current or last known GPS location of a connected vehicle."
+        },
+        {
+          "info": {
+            "name": "Get Vehicle Trips",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.eig.toyota.com/telematics/v1/vehicles/:vin/trips",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path",
+                "description": "Vehicle Identification Number"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for trip history"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for trip history"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of trips to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "includeRoute",
+                "value": "",
+                "type": "query",
+                "description": "Include GPS route coordinates for each trip"
+              }
+            ]
+          },
+          "docs": "Returns trip history for a connected vehicle within a date range."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Fleet",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Fleet Vehicles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.eig.toyota.com/telematics/v1/fleet/:fleetId/vehicles",
+            "params": [
+              {
+                "name": "fleetId",
+                "value": "",
+                "type": "path",
+                "description": "Fleet identifier"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns all vehicles enrolled in a specific fleet."
+        },
+        {
+          "info": {
+            "name": "Enroll Vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.eig.toyota.com/telematics/v1/fleet/:fleetId/vehicles/enroll",
+            "params": [
+              {
+                "name": "fleetId",
+                "value": "",
+                "type": "path",
+                "description": "Fleet identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enroll a vehicle in the telematics fleet program."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

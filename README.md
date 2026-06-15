@@ -1,107 +1,127 @@
-# Toyota
+# Toyota (toyota)
 
-Toyota Motor Corporation is a Japanese multinational automotive manufacturer that designs, manufactures, and sells vehicles including cars, trucks, and buses. Founded in 1937, Toyota is one of the largest automakers in the world, known for reliability, innovation, and commitment to sustainability. Toyota's developer platform provides APIs for vehicle lifecycle management, telematics, connected services, dealer data, and fleet management.
+Toyota Motor Corporation is a Japanese multinational automotive manufacturer that designs, manufactures, and sells vehicles, including cars, trucks, and buses. Founded in 1937, Toyota has become one of the largest automakers in the world, known for its reliability, innovation, and commitment to sustainability. Toyota's developer platform (developer.eig.toyota.com) provides APIs for vehicle lifecycle management, telematics and connected services, dealer data, and fleet management for business partners, dealers, fleet operators, and developers building mobility applications. Toyota's product lineup includes hybrids like the Prius, trucks like the Tacoma, and EVs including the bZ4X.
 
-**Developer Portal:** [https://developer.eig.toyota.com/](https://developer.eig.toyota.com/)
-**API Catalog:** [https://developer.eig.toyota.com/apis](https://developer.eig.toyota.com/apis)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/toyota/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/toyota/refs/heads/main/apis.yml)
 
----
+## Scope
+
+- **Type:** Index
+- **Position:** Consumer
+- **Access:** 3rd-Party
+
+## Tags
+
+- Automobiles
+- Cars
+- Vehicles
+- Connected Car
+- Telematics
+- Fleet Management
+- Electric Vehicles
+
+## Timestamps
+
+- **Created:** 2025-02-25
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### Toyota Vehicle API
 
-Vehicle lifecycle API providing information from initial order through retail sale for Toyota North America vehicles.
+Toyota Vehicle API provides lifecycle information for vehicles from initial order through retail sale. Enables dealers, fleet managers, and authorized business partners to access vehicle inventory, order status, and vehicle configuration data for Toyota North America vehicles.
 
-- **Documentation:** [https://developer.eig.toyota.com/apis/vehicle](https://developer.eig.toyota.com/apis/vehicle)
+- **Human URL:** [https://developer.eig.toyota.com/apis/vehicle](https://developer.eig.toyota.com/apis/vehicle)
+
+#### Tags
+
+- Automotive
+- Vehicles
+- Connected Car
+- Vehicle Lifecycle
+- Dealer
+
+#### Properties
+
+- [Documentation](https://developer.eig.toyota.com/apis/vehicle)
+- [OpenAPI](openapi/toyota-vehicle-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
 
 ### Toyota Telematics API
 
-Connected services subscriptions, satellite radio status, vehicle health data, GPS location, telemetry, and trip history for enrolled fleet vehicles.
+Toyota Telematics API provides details related to connected services, satellite radio subscriptions, and vehicle health data for enrolled vehicles based on Unit ID or VIN. Supports fleet management, rental car operations, and telematics insurance use cases.
 
-- **Documentation:** [https://developer.eig.toyota.com/apis/telematics](https://developer.eig.toyota.com/apis/telematics)
-- **OpenAPI Spec:** [openapi/toyota-telematics-openapi.yml](openapi/toyota-telematics-openapi.yml)
+- **Human URL:** [https://developer.eig.toyota.com/apis/telematics](https://developer.eig.toyota.com/apis/telematics)
+
+#### Tags
+
+- Automotive
+- Telematics
+- Connected Car
+- Fleet Management
+- Vehicle Health
+
+#### Properties
+
+- [Documentation](https://developer.eig.toyota.com/apis/telematics)
+- [OpenAPI](openapi/toyota-telematics-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/toyota-telematics.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/toyota-telematics.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Toyota Connected Services API
 
-Real-time vehicle status, remote commands (lock/unlock, horn), climate pre-conditioning, EV battery/charging status, notifications, and service history for Toyota and Lexus connected vehicles.
+Toyota Connected Services API enables authorized applications to access real-time vehicle status, remote control features, location data, electric vehicle charging status, climate control, and trip history for Toyota and Lexus connected vehicles.
 
-- **Documentation:** [https://developer.eig.toyota.com/](https://developer.eig.toyota.com/)
-- **OpenAPI Spec:** [openapi/toyota-connected-services-openapi.yml](openapi/toyota-connected-services-openapi.yml)
+- **Human URL:** [https://developer.eig.toyota.com/](https://developer.eig.toyota.com/)
+
+#### Tags
+
+- Automotive
+- Connected Car
+- Remote Control
+- Vehicle Status
+- EV
+
+#### Properties
+
+- [Documentation](https://developer.eig.toyota.com/)
+- [OpenAPI](openapi/toyota-connected-services-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/toyota-connected-services.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/toyota-connected-services.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Toyota Dealers API
 
-Dealer search, location, hours, services, and inventory for Toyota and Lexus dealerships.
+Toyota Dealers API enables searching and retrieving dealer information including location, hours, services offered, and inventory. Supports dealer locator applications and service scheduling integrations for Toyota and Lexus dealers.
 
-- **Documentation:** [https://developer-sb.eig.toyota.com/apis/dealer](https://developer-sb.eig.toyota.com/apis/dealer)
+- **Human URL:** [https://developer-sb.eig.toyota.com/apis/dealer](https://developer-sb.eig.toyota.com/apis/dealer)
 
----
+#### Tags
 
-## Artifacts
+- Automotive
+- Dealers
+- Dealer Locator
+- Service
+- Inventory
 
-### OpenAPI Specifications
+#### Properties
 
-| File | API | Description |
-|---|---|---|
-| [toyota-telematics-openapi.yml](openapi/toyota-telematics-openapi.yml) | Telematics | Fleet vehicle telematics and subscription data |
-| [toyota-connected-services-openapi.yml](openapi/toyota-connected-services-openapi.yml) | Connected Services | Real-time vehicle status and remote control |
+- [Documentation](https://developer-sb.eig.toyota.com/apis/dealer)
+- [Postman Collection](collections/toyota-connected-services.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/toyota-connected-services.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/toyota-telematics.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/toyota-telematics.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-### Naftiko Capabilities
+## Common Properties
 
-**Workflow Capabilities:**
+- [GitHub Organization](https://github.com/TOYOTA)
+- [Website](https://developer.eig.toyota.com/)
+- [Developer](https://developer.eig.toyota.com/)
+- [Documentation](https://developer.eig.toyota.com/apis)
+- [LinkedIn](https://www.linkedin.com/company/toyota-motor-corporation)
+- [Rules](rules/toyota-spectral-rules.yml)
+- [Vocabulary](vocabulary/toyota-vocabulary.yml)
+- [J S O N L D Context](json-ld/toyota-context.jsonld)
 
-| File | Description |
-|---|---|
-| [capabilities/fleet-management.yaml](capabilities/fleet-management.yaml) | Toyota fleet management and vehicle monitoring (12 tools) |
-| [capabilities/connected-vehicle.yaml](capabilities/connected-vehicle.yaml) | Personal connected vehicle owner workflow (14 tools) |
+## Maintainers
 
-**Shared Per-API Definitions:**
-
-| File | API |
-|---|---|
-| [capabilities/shared/telematics.yaml](capabilities/shared/telematics.yaml) | Toyota Telematics |
-| [capabilities/shared/connected-services.yaml](capabilities/shared/connected-services.yaml) | Toyota Connected Services |
-
-### JSON Schemas
-
-| File | Resource |
-|---|---|
-| [json-schema/toyota-vehicle-schema.json](json-schema/toyota-vehicle-schema.json) | Connected Vehicle |
-| [json-schema/toyota-electric-status-schema.json](json-schema/toyota-electric-status-schema.json) | Electric Status (EV/Hybrid) |
-
-### JSON Structure
-
-| File | Resource |
-|---|---|
-| [json-structure/toyota-vehicle-structure.json](json-structure/toyota-vehicle-structure.json) | Connected Vehicle |
-
-### JSON-LD Context
-
-| File | Description |
-|---|---|
-| [json-ld/toyota-context.jsonld](json-ld/toyota-context.jsonld) | Linked data context mapping Toyota vehicle resources to schema.org |
-
-### Examples
-
-| File | Operation |
-|---|---|
-| [examples/toyota-get-electric-status-example.json](examples/toyota-get-electric-status-example.json) | Get Electric Status |
-| [examples/toyota-send-remote-command-example.json](examples/toyota-send-remote-command-example.json) | Send Remote Command (Lock) |
-
-### Spectral Rules
-
-| File | Description |
-|---|---|
-| [rules/toyota-spectral-rules.yml](rules/toyota-spectral-rules.yml) | API design rules for Toyota OpenAPI specifications |
-
-### Vocabulary
-
-| File | Description |
-|---|---|
-| [vocabulary/toyota-vocabulary.yml](vocabulary/toyota-vocabulary.yml) | Domain vocabulary for Toyota connected vehicle and telematics APIs |
-
----
-
-## Tags
-
-`Automobiles` `Cars` `Vehicles` `Connected Car` `Telematics` `Fleet Management` `Electric Vehicles`
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
