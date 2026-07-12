@@ -73,6 +73,12 @@ apis:
     including location, hours, services offered, and inventory. Supports dealer locator
     applications and service scheduling integrations for Toyota and Lexus dealers.
 common:
+- type: VulnerabilityDisclosure
+  url: security/toyota-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/toyota-domain-security.yml
+- type: Authentication
+  url: authentication/toyota-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/TOYOTA
 - type: Website
@@ -89,6 +95,8 @@ common:
   url: vocabulary/toyota-vocabulary.yml
 - type: JSONLDContext
   url: json-ld/toyota-context.jsonld
+- type: Blog
+  url: https://pressroom.toyota.com/feed/
 name: Toyota
 tags:
 - Automobiles
