@@ -1,0 +1,13 @@
+{
+  "repo": "toyota",
+  "feeds": [
+    {
+      "source": "https://pressroom.toyota.com/feed/",
+      "feed_url": "https://pressroom.toyota.com/feed/",
+      "title": "Toyota USA Newsroom",
+      "saved": 7
+    }
+  ],
+  "fetched": "2026-07-11T11:43:46Z",
+  "post_count": 27
+}
