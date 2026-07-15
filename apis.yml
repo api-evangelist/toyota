@@ -73,6 +73,8 @@ apis:
     including location, hours, services offered, and inventory. Supports dealer locator
     applications and service scheduling integrations for Toyota and Lexus dealers.
 common:
+- type: AgenticAccess
+  url: agentic-access/toyota-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/toyota-vulnerability-disclosure.yml
 - type: DomainSecurity
