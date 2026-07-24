@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate Electric API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: Electric
+  description: Electric and hybrid vehicle battery data
+paths:
+  /vehicles/{vin}/electric:
+    get:
+      operationId: getElectricStatus
+      summary: Get Electric Status
+      description: Returns EV battery, charging status, and electric range data for hybrid and EV models.
+      tags:
+      - Electric
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Electric vehicle status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElectricStatus'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/electric/refresh:
+    post:
+      operationId: refreshElectricStatus
+      summary: Refresh Electric Status
+      description: Request an updated state-of-charge reading from the vehicle.
+      tags:
+      - Electric
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Refresh request sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshStatus'
+components:
+  schemas:
+    ElectricStatus:
+      type: object
+      properties:
+        vin:
+          type: string
+        batteryLevel:
+          type: integer
+          description: Battery state of charge percentage (0-100)
+        batteryRange:
+          type: number
+          description: Estimated electric range in miles
+        fuelLevel:
+          type: integer
+          description: Fuel percentage for hybrid models (0-100)
+        fuelRange:
+          type: number
+          description: Estimated fuel range in miles
+        totalRange:
+          type: number
+          description: Combined electric + fuel range for hybrids
+        chargingStatus:
+          type: string
+          enum:
+          - not_charging
+          - charging
+          - fully_charged
+          - plugged_in
+        pluggedIn:
+          type: boolean
+        estimatedChargeCompleteTime:
+          type: string
+          format: date-time
+        lastUpdatedAt:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    RefreshStatus:
+      type: object
+      properties:
+        requestId:
+          type: string
+        status:
+          type: string
+        returnCode:
+          type: string
+          description: Return code (000000 indicates success)
+        timestamp:
+          type: string
+          format: date-time
+  responses:
+    NotFound:
+      description: Vehicle not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

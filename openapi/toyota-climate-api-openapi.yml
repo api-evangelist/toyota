@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: Climate
+  description: Climate control management
+paths:
+  /vehicles/{vin}/climate:
+    get:
+      operationId: getClimateStatus
+      summary: Get Climate Status
+      description: Returns the current climate control settings and status for the vehicle.
+      tags:
+      - Climate
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Climate status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateStatus'
+    put:
+      operationId: updateClimateSettings
+      summary: Update Climate Settings
+      description: Update climate control settings for the vehicle.
+      tags:
+      - Climate
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClimateSettings'
+      responses:
+        '200':
+          description: Climate settings updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateSettings'
+  /vehicles/{vin}/climate/command:
+    post:
+      operationId: sendClimateCommand
+      summary: Send Climate Command
+      description: Send a climate control command to start or stop the vehicle's climate system remotely.
+      tags:
+      - Climate
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClimateCommand'
+      responses:
+        '200':
+          description: Command sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshStatus'
+components:
+  schemas:
+    ClimateCommand:
+      type: object
+      required:
+      - command
+      properties:
+        command:
+          type: string
+          enum:
+          - start
+          - stop
+          description: Climate control command
+        temperature:
+          type: number
+          description: Target temperature for start command
+    ClimateSettings:
+      type: object
+      properties:
+        temperature:
+          type: number
+          description: Target temperature in Fahrenheit
+        fanSpeed:
+          type: integer
+          minimum: 1
+          maximum: 5
+        mode:
+          type: string
+          enum:
+          - auto
+          - cool
+          - heat
+          - defrost
+    RefreshStatus:
+      type: object
+      properties:
+        requestId:
+          type: string
+        status:
+          type: string
+        returnCode:
+          type: string
+          description: Return code (000000 indicates success)
+        timestamp:
+          type: string
+          format: date-time
+    ClimateStatus:
+      type: object
+      properties:
+        vin:
+          type: string
+        isRunning:
+          type: boolean
+        temperature:
+          type: number
+          description: Target temperature in Fahrenheit
+        fanSpeed:
+          type: integer
+          description: Fan speed level (1-5)
+        mode:
+          type: string
+          enum:
+          - auto
+          - cool
+          - heat
+          - defrost
+          - false
+        lastUpdatedAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

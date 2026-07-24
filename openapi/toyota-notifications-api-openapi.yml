@@ -1,0 +1,89 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate Notifications API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: Notifications
+  description: Vehicle notification management
+paths:
+  /vehicles/{vin}/notifications:
+    get:
+      operationId: getVehicleNotifications
+      summary: Get Vehicle Notifications
+      description: Returns all notifications for the vehicle including alerts, messages, and recalls.
+      tags:
+      - Notifications
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: unreadOnly
+        in: query
+        schema:
+          type: boolean
+          default: false
+        description: Return only unread notifications
+      responses:
+        '200':
+          description: Notifications list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationList'
+components:
+  schemas:
+    NotificationList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+        total:
+          type: integer
+        unreadCount:
+          type: integer
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - alert
+          - message
+          - recall
+          - maintenance
+          - service
+        title:
+          type: string
+        message:
+          type: string
+        isRead:
+          type: boolean
+        severity:
+          type: string
+          enum:
+          - info
+          - warning
+          - critical
+        createdAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

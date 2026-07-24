@@ -1,0 +1,124 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate Remote API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: Remote
+  description: Remote vehicle commands
+paths:
+  /vehicles/{vin}/climate/command:
+    post:
+      operationId: sendClimateCommand
+      summary: Send Climate Command
+      description: Send a climate control command to start or stop the vehicle's climate system remotely.
+      tags:
+      - Remote
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClimateCommand'
+      responses:
+        '200':
+          description: Command sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshStatus'
+  /vehicles/{vin}/remote-command:
+    post:
+      operationId: sendRemoteCommand
+      summary: Send Remote Command
+      description: Send a remote command to the vehicle such as lock, unlock, or horn.
+      tags:
+      - Remote
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoteCommand'
+      responses:
+        '200':
+          description: Command accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshStatus'
+components:
+  schemas:
+    ClimateCommand:
+      type: object
+      required:
+      - command
+      properties:
+        command:
+          type: string
+          enum:
+          - start
+          - stop
+          description: Climate control command
+        temperature:
+          type: number
+          description: Target temperature for start command
+    RefreshStatus:
+      type: object
+      properties:
+        requestId:
+          type: string
+        status:
+          type: string
+        returnCode:
+          type: string
+          description: Return code (000000 indicates success)
+        timestamp:
+          type: string
+          format: date-time
+    RemoteCommand:
+      type: object
+      required:
+      - command
+      properties:
+        command:
+          type: string
+          enum:
+          - lock
+          - unlock
+          - horn
+          - lights
+          - panic_on
+          - panic_off
+          - trunk_open
+          description: Remote command to send
+        beeps:
+          type: integer
+          minimum: 1
+          maximum: 3
+          description: Number of horn beeps for horn command
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

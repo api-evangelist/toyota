@@ -1,0 +1,105 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate Subscriptions API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: Subscriptions
+  description: Connected service and satellite radio subscriptions
+paths:
+  /vehicles/{vin}/subscriptions:
+    get:
+      operationId: getVehicleSubscriptions
+      summary: Get Vehicle Subscriptions
+      description: Returns connected service and satellite radio subscription details for a vehicle.
+      tags:
+      - Subscriptions
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Subscription details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleSubscriptions'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    VehicleSubscriptions:
+      type: object
+      properties:
+        vin:
+          type: string
+        connectedServices:
+          type: array
+          items:
+            type: object
+            properties:
+              serviceType:
+                type: string
+                description: Type of connected service
+              status:
+                type: string
+                enum:
+                - active
+                - expired
+                - trial
+                - cancelled
+              effectiveDate:
+                type: string
+                format: date
+              terminationDate:
+                type: string
+                format: date
+        satelliteRadio:
+          type: object
+          properties:
+            provider:
+              type: string
+            status:
+              type: string
+              enum:
+              - active
+              - expired
+              - trial
+              - cancelled
+            effectiveDate:
+              type: string
+              format: date
+            terminationDate:
+              type: string
+              format: date
+  responses:
+    NotFound:
+      description: Vehicle or resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

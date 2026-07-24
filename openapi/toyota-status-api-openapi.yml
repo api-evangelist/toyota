@@ -1,0 +1,226 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate Status API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: Status
+  description: Vehicle status and diagnostics
+paths:
+  /vehicles/{vin}/status:
+    get:
+      operationId: getVehicleStatus
+      summary: Get Vehicle Status
+      description: Returns the current status and general information for a connected vehicle.
+      tags:
+      - Status
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Vehicle status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleStatus'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/status/refresh:
+    post:
+      operationId: refreshVehicleStatus
+      summary: Refresh Vehicle Status
+      description: Wake the vehicle and refresh its status data. Requires the vehicle to be connected.
+      tags:
+      - Status
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - deviceId
+              - deviceType
+              - guid
+              - vin
+              properties:
+                deviceId:
+                  type: string
+                deviceType:
+                  type: string
+                guid:
+                  type: string
+                vin:
+                  type: string
+      responses:
+        '200':
+          description: Status refresh initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshStatus'
+  /vehicles/{vin}/health:
+    get:
+      operationId: getVehicleHealthStatus
+      summary: Get Vehicle Health Status
+      description: Returns vehicle health information including oil level and warning lights.
+      tags:
+      - Status
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Vehicle health status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleHealth'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    VehicleStatus:
+      type: object
+      properties:
+        vin:
+          type: string
+        ignition:
+          type: string
+          enum:
+          - true
+          - false
+        doorsLocked:
+          type: boolean
+        doorStatus:
+          type: object
+          properties:
+            frontLeft:
+              type: string
+              enum:
+              - open
+              - closed
+            frontRight:
+              type: string
+              enum:
+              - open
+              - closed
+            rearLeft:
+              type: string
+              enum:
+              - open
+              - closed
+            rearRight:
+              type: string
+              enum:
+              - open
+              - closed
+            trunk:
+              type: string
+              enum:
+              - open
+              - closed
+        windowStatus:
+          type: object
+          properties:
+            frontLeft:
+              type: string
+              enum:
+              - open
+              - closed
+              - venting
+            frontRight:
+              type: string
+              enum:
+              - open
+              - closed
+              - venting
+        lastUpdatedAt:
+          type: string
+          format: date-time
+    RefreshStatus:
+      type: object
+      properties:
+        requestId:
+          type: string
+        status:
+          type: string
+        returnCode:
+          type: string
+          description: Return code (000000 indicates success)
+        timestamp:
+          type: string
+          format: date-time
+    VehicleHealth:
+      type: object
+      properties:
+        vin:
+          type: string
+        overallStatus:
+          type: string
+          enum:
+          - good
+          - warning
+          - critical
+        oilQuantity:
+          type: string
+          enum:
+          - ok
+          - low
+          - critically_low
+        warningLights:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              severity:
+                type: string
+              description:
+                type: string
+        maintenanceRequired:
+          type: boolean
+        lastReportedAt:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  responses:
+    NotFound:
+      description: Vehicle not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,1109 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate Vehicles API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: Vehicles
+  description: Vehicle registration and management
+paths:
+  /vehicles:
+    get:
+      operationId: listConnectedVehicles
+      summary: List Connected Vehicles
+      description: Returns all vehicles registered to the authenticated account.
+      tags:
+      - Vehicles
+      responses:
+        '200':
+          description: Vehicle list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectedVehicleList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /vehicles/{vin}:
+    get:
+      operationId: getConnectedVehicle
+      summary: Get Connected Vehicle
+      description: Get registration details for a specific connected vehicle.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Vehicle details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectedVehicle'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateVehicleAlias
+      summary: Update Vehicle Alias
+      description: Update the nickname/alias for a vehicle.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - alias
+              properties:
+                alias:
+                  type: string
+                  description: New vehicle nickname
+                guid:
+                  type: string
+                  description: User GUID
+      responses:
+        '200':
+          description: Vehicle alias updated
+  /vehicles/{vin}/status:
+    get:
+      operationId: getVehicleStatus
+      summary: Get Vehicle Status
+      description: Returns the current status and general information for a connected vehicle.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Vehicle status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleStatus'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/status/refresh:
+    post:
+      operationId: refreshVehicleStatus
+      summary: Refresh Vehicle Status
+      description: Wake the vehicle and refresh its status data. Requires the vehicle to be connected.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - deviceId
+              - deviceType
+              - guid
+              - vin
+              properties:
+                deviceId:
+                  type: string
+                deviceType:
+                  type: string
+                guid:
+                  type: string
+                vin:
+                  type: string
+      responses:
+        '200':
+          description: Status refresh initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshStatus'
+  /vehicles/{vin}/health:
+    get:
+      operationId: getVehicleHealthStatus
+      summary: Get Vehicle Health Status
+      description: Returns vehicle health information including oil level and warning lights.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Vehicle health status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleHealth'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/location:
+    get:
+      operationId: getVehiclePosition
+      summary: Get Vehicle Location
+      description: Returns the last known GPS location of the vehicle when parked.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Vehicle location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehiclePosition'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/electric:
+    get:
+      operationId: getElectricStatus
+      summary: Get Electric Status
+      description: Returns EV battery, charging status, and electric range data for hybrid and EV models.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Electric vehicle status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElectricStatus'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/electric/refresh:
+    post:
+      operationId: refreshElectricStatus
+      summary: Refresh Electric Status
+      description: Request an updated state-of-charge reading from the vehicle.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Refresh request sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshStatus'
+  /vehicles/{vin}/climate:
+    get:
+      operationId: getClimateStatus
+      summary: Get Climate Status
+      description: Returns the current climate control settings and status for the vehicle.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Climate status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateStatus'
+    put:
+      operationId: updateClimateSettings
+      summary: Update Climate Settings
+      description: Update climate control settings for the vehicle.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClimateSettings'
+      responses:
+        '200':
+          description: Climate settings updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateSettings'
+  /vehicles/{vin}/climate/command:
+    post:
+      operationId: sendClimateCommand
+      summary: Send Climate Command
+      description: Send a climate control command to start or stop the vehicle's climate system remotely.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClimateCommand'
+      responses:
+        '200':
+          description: Command sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshStatus'
+  /vehicles/{vin}/trips:
+    get:
+      operationId: getTrips
+      summary: Get Trips
+      description: Returns trip history for a connected vehicle within a specified date range.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fromDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Start date for trip history
+      - name: toDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: End date for trip history
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 50
+          maximum: 50
+        description: Maximum trips to return
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          default: 0
+        description: Pagination offset
+      - name: includeRoute
+        in: query
+        schema:
+          type: boolean
+          default: false
+        description: Include GPS route for each trip
+      - name: includeSummary
+        in: query
+        schema:
+          type: boolean
+          default: true
+        description: Include trip summary statistics
+      responses:
+        '200':
+          description: Trip history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripHistoryList'
+  /vehicles/{vin}/notifications:
+    get:
+      operationId: getVehicleNotifications
+      summary: Get Vehicle Notifications
+      description: Returns all notifications for the vehicle including alerts, messages, and recalls.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: unreadOnly
+        in: query
+        schema:
+          type: boolean
+          default: false
+        description: Return only unread notifications
+      responses:
+        '200':
+          description: Notifications list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationList'
+  /vehicles/{vin}/remote-command:
+    post:
+      operationId: sendRemoteCommand
+      summary: Send Remote Command
+      description: Send a remote command to the vehicle such as lock, unlock, or horn.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoteCommand'
+      responses:
+        '200':
+          description: Command accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshStatus'
+  /vehicles/{vin}/service-history:
+    get:
+      operationId: getServiceHistory
+      summary: Get Service History
+      description: Returns service history records for the vehicle.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Service history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceHistoryList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/subscriptions:
+    get:
+      operationId: getVehicleSubscriptions
+      summary: Get Vehicle Subscriptions
+      description: Returns connected service and satellite radio subscription details for a vehicle.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Subscription details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleSubscriptions'
+        '404':
+          $ref: '#/components/responses/NotFound_2'
+  /vehicles/{vin}/telemetry:
+    get:
+      operationId: getVehicleTelemetry
+      summary: Get Vehicle Telemetry
+      description: Returns current telemetry data including odometer, fuel level, and distance.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Vehicle telemetry data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleTelemetry'
+        '404':
+          $ref: '#/components/responses/NotFound_2'
+  /fleet/{fleetId}/vehicles:
+    get:
+      operationId: listFleetVehicles
+      summary: List Fleet Vehicles
+      description: Returns all vehicles enrolled in a specific fleet.
+      tags:
+      - Vehicles
+      parameters:
+      - name: fleetId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Fleet identifier
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - pending
+        description: Filter by status
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 50
+      responses:
+        '200':
+          description: Fleet vehicles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleList'
+        '404':
+          $ref: '#/components/responses/NotFound_2'
+  /fleet/{fleetId}/vehicles/enroll:
+    post:
+      operationId: enrollVehicle
+      summary: Enroll Vehicle
+      description: Enroll a vehicle in the telematics fleet program.
+      tags:
+      - Vehicles
+      parameters:
+      - name: fleetId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Fleet identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleEnrollmentRequest'
+      responses:
+        '201':
+          description: Vehicle enrolled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  schemas:
+    RemoteCommand:
+      type: object
+      required:
+      - command
+      properties:
+        command:
+          type: string
+          enum:
+          - lock
+          - unlock
+          - horn
+          - lights
+          - panic_on
+          - panic_off
+          - trunk_open
+          description: Remote command to send
+        beeps:
+          type: integer
+          minimum: 1
+          maximum: 3
+          description: Number of horn beeps for horn command
+    VehicleTelemetry:
+      type: object
+      properties:
+        vin:
+          type: string
+        odometer:
+          type: number
+          description: Odometer reading in miles
+        fuelLevel:
+          type: integer
+          description: Fuel percentage (0-100)
+        distanceSinceLastRefuel:
+          type: number
+          description: Miles driven since last refuel
+        estimatedRange:
+          type: number
+          description: Estimated range remaining in miles
+        lastReportedAt:
+          type: string
+          format: date-time
+    ClimateSettings:
+      type: object
+      properties:
+        temperature:
+          type: number
+          description: Target temperature in Fahrenheit
+        fanSpeed:
+          type: integer
+          minimum: 1
+          maximum: 5
+        mode:
+          type: string
+          enum:
+          - auto
+          - cool
+          - heat
+          - defrost
+    RefreshStatus:
+      type: object
+      properties:
+        requestId:
+          type: string
+        status:
+          type: string
+        returnCode:
+          type: string
+          description: Return code (000000 indicates success)
+        timestamp:
+          type: string
+          format: date-time
+    VehicleEnrollmentRequest:
+      type: object
+      required:
+      - vin
+      properties:
+        vin:
+          type: string
+          minLength: 17
+          maxLength: 17
+          description: Vehicle Identification Number
+        unitId:
+          type: string
+          description: Telematics unit identifier (if known)
+        services:
+          type: array
+          items:
+            type: string
+          description: List of data services to subscribe to
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - alert
+          - message
+          - recall
+          - maintenance
+          - service
+        title:
+          type: string
+        message:
+          type: string
+        isRead:
+          type: boolean
+        severity:
+          type: string
+          enum:
+          - info
+          - warning
+          - critical
+        createdAt:
+          type: string
+          format: date-time
+    ClimateStatus:
+      type: object
+      properties:
+        vin:
+          type: string
+        isRunning:
+          type: boolean
+        temperature:
+          type: number
+          description: Target temperature in Fahrenheit
+        fanSpeed:
+          type: integer
+          description: Fan speed level (1-5)
+        mode:
+          type: string
+          enum:
+          - auto
+          - cool
+          - heat
+          - defrost
+          - false
+        lastUpdatedAt:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ServiceHistory:
+      type: object
+      properties:
+        id:
+          type: string
+        vin:
+          type: string
+        category:
+          type: string
+          description: Service category (oil change, inspection, etc.)
+        description:
+          type: string
+        serviceDate:
+          type: string
+          format: date
+        mileage:
+          type: integer
+        dealerCode:
+          type: string
+        dealerName:
+          type: string
+    VehiclePosition:
+      type: object
+      properties:
+        vin:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        isParked:
+          type: boolean
+        timestamp:
+          type: string
+          format: date-time
+    Coordinates:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        timestamp:
+          type: string
+          format: date-time
+    TripHistoryList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TripHistory'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+    Vehicle:
+      type: object
+      properties:
+        vin:
+          type: string
+          description: Vehicle Identification Number
+        unitId:
+          type: string
+          description: Telematics unit identifier
+        make:
+          type: string
+          description: Vehicle make (Toyota, Lexus)
+        model:
+          type: string
+        year:
+          type: integer
+        color:
+          type: string
+        trim:
+          type: string
+        enrollmentStatus:
+          type: string
+          enum:
+          - active
+          - inactive
+          - pending
+        fleetId:
+          type: string
+        enrolledAt:
+          type: string
+          format: date-time
+    ConnectedVehicle:
+      type: object
+      properties:
+        vin:
+          type: string
+        alias:
+          type: string
+          description: Vehicle nickname
+        make:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+        color:
+          type: string
+        trim:
+          type: string
+        guid:
+          type: string
+          description: User GUID associated with the vehicle
+        isConnected:
+          type: boolean
+        lastConnectedAt:
+          type: string
+          format: date-time
+    VehicleHealth:
+      type: object
+      properties:
+        vin:
+          type: string
+        overallStatus:
+          type: string
+          enum:
+          - good
+          - warning
+          - critical
+        oilQuantity:
+          type: string
+          enum:
+          - ok
+          - low
+          - critically_low
+        warningLights:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              severity:
+                type: string
+              description:
+                type: string
+        maintenanceRequired:
+          type: boolean
+        lastReportedAt:
+          type: string
+          format: date-time
+    NotificationList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+        total:
+          type: integer
+        unreadCount:
+          type: integer
+    ServiceHistoryList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceHistory'
+    TripHistory:
+      type: object
+      properties:
+        id:
+          type: string
+        vin:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        distanceMiles:
+          type: number
+        durationMinutes:
+          type: integer
+        averageSpeedMph:
+          type: number
+        maxSpeedMph:
+          type: number
+        startAddress:
+          type: string
+        endAddress:
+          type: string
+        startCoordinates:
+          $ref: '#/components/schemas/Coordinates'
+        endCoordinates:
+          $ref: '#/components/schemas/Coordinates'
+        route:
+          type: array
+          items:
+            $ref: '#/components/schemas/Coordinates'
+    ElectricStatus:
+      type: object
+      properties:
+        vin:
+          type: string
+        batteryLevel:
+          type: integer
+          description: Battery state of charge percentage (0-100)
+        batteryRange:
+          type: number
+          description: Estimated electric range in miles
+        fuelLevel:
+          type: integer
+          description: Fuel percentage for hybrid models (0-100)
+        fuelRange:
+          type: number
+          description: Estimated fuel range in miles
+        totalRange:
+          type: number
+          description: Combined electric + fuel range for hybrids
+        chargingStatus:
+          type: string
+          enum:
+          - not_charging
+          - charging
+          - fully_charged
+          - plugged_in
+        pluggedIn:
+          type: boolean
+        estimatedChargeCompleteTime:
+          type: string
+          format: date-time
+        lastUpdatedAt:
+          type: string
+          format: date-time
+    VehicleSubscriptions:
+      type: object
+      properties:
+        vin:
+          type: string
+        connectedServices:
+          type: array
+          items:
+            type: object
+            properties:
+              serviceType:
+                type: string
+                description: Type of connected service
+              status:
+                type: string
+                enum:
+                - active
+                - expired
+                - trial
+                - cancelled
+              effectiveDate:
+                type: string
+                format: date
+              terminationDate:
+                type: string
+                format: date
+        satelliteRadio:
+          type: object
+          properties:
+            provider:
+              type: string
+            status:
+              type: string
+              enum:
+              - active
+              - expired
+              - trial
+              - cancelled
+            effectiveDate:
+              type: string
+              format: date
+            terminationDate:
+              type: string
+              format: date
+    VehicleStatus:
+      type: object
+      properties:
+        vin:
+          type: string
+        ignition:
+          type: string
+          enum:
+          - true
+          - false
+        doorsLocked:
+          type: boolean
+        doorStatus:
+          type: object
+          properties:
+            frontLeft:
+              type: string
+              enum:
+              - open
+              - closed
+            frontRight:
+              type: string
+              enum:
+              - open
+              - closed
+            rearLeft:
+              type: string
+              enum:
+              - open
+              - closed
+            rearRight:
+              type: string
+              enum:
+              - open
+              - closed
+            trunk:
+              type: string
+              enum:
+              - open
+              - closed
+        windowStatus:
+          type: object
+          properties:
+            frontLeft:
+              type: string
+              enum:
+              - open
+              - closed
+              - venting
+            frontRight:
+              type: string
+              enum:
+              - open
+              - closed
+              - venting
+        lastUpdatedAt:
+          type: string
+          format: date-time
+    ConnectedVehicleList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectedVehicle'
+    ClimateCommand:
+      type: object
+      required:
+      - command
+      properties:
+        command:
+          type: string
+          enum:
+          - start
+          - stop
+          description: Climate control command
+        temperature:
+          type: number
+          description: Target temperature for start command
+    VehicleList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Vehicle not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound_2:
+      description: Vehicle or resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

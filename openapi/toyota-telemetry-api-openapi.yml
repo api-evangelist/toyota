@@ -1,0 +1,229 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate Telemetry API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: Telemetry
+  description: Real-time vehicle telemetry data
+paths:
+  /vehicles/{vin}/telemetry:
+    get:
+      operationId: getVehicleTelemetry
+      summary: Get Vehicle Telemetry
+      description: Returns current telemetry data including odometer, fuel level, and distance.
+      tags:
+      - Telemetry
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Vehicle telemetry data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleTelemetry'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/location:
+    get:
+      operationId: getVehicleLocation
+      summary: Get Vehicle Location
+      description: Returns the current or last known GPS location of a connected vehicle.
+      tags:
+      - Telemetry
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Vehicle location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleLocation'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vehicles/{vin}/trips:
+    get:
+      operationId: getVehicleTrips
+      summary: Get Vehicle Trips
+      description: Returns trip history for a connected vehicle within a date range.
+      tags:
+      - Telemetry
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Vehicle Identification Number
+      - name: fromDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Start date for trip history
+      - name: toDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: End date for trip history
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 50
+          maximum: 50
+        description: Maximum number of trips to return
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          default: 0
+        description: Pagination offset
+      - name: includeRoute
+        in: query
+        schema:
+          type: boolean
+          default: false
+        description: Include GPS route coordinates for each trip
+      responses:
+        '200':
+          description: Trip history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripList'
+components:
+  responses:
+    NotFound:
+      description: Vehicle or resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    VehicleTelemetry:
+      type: object
+      properties:
+        vin:
+          type: string
+        odometer:
+          type: number
+          description: Odometer reading in miles
+        fuelLevel:
+          type: integer
+          description: Fuel percentage (0-100)
+        distanceSinceLastRefuel:
+          type: number
+          description: Miles driven since last refuel
+        estimatedRange:
+          type: number
+          description: Estimated range remaining in miles
+        lastReportedAt:
+          type: string
+          format: date-time
+    TripList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trip'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    TripLocation:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        timestamp:
+          type: string
+          format: date-time
+    Trip:
+      type: object
+      properties:
+        id:
+          type: string
+        vin:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        distanceMiles:
+          type: number
+        startLocation:
+          $ref: '#/components/schemas/TripLocation'
+        endLocation:
+          $ref: '#/components/schemas/TripLocation'
+        route:
+          type: array
+          items:
+            $ref: '#/components/schemas/TripLocation'
+          description: GPS coordinates along the trip route
+    VehicleLocation:
+      type: object
+      properties:
+        vin:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        heading:
+          type: integer
+          description: Vehicle heading in degrees (0-359)
+        speed:
+          type: number
+          description: Vehicle speed in mph
+        isParked:
+          type: boolean
+        timestamp:
+          type: string
+          format: date-time
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

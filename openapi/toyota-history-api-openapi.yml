@@ -1,0 +1,88 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate History API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: History
+  description: Service history
+paths:
+  /vehicles/{vin}/service-history:
+    get:
+      operationId: getServiceHistory
+      summary: Get Service History
+      description: Returns service history records for the vehicle.
+      tags:
+      - History
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Service history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceHistoryList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    ServiceHistoryList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceHistory'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ServiceHistory:
+      type: object
+      properties:
+        id:
+          type: string
+        vin:
+          type: string
+        category:
+          type: string
+          description: Service category (oil change, inspection, etc.)
+        description:
+          type: string
+        serviceDate:
+          type: string
+          format: date
+        mileage:
+          type: integer
+        dealerCode:
+          type: string
+        dealerName:
+          type: string
+  responses:
+    NotFound:
+      description: Vehicle not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

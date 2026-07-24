@@ -1,0 +1,141 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate Trips API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: Trips
+  description: Trip history and driving data
+paths:
+  /vehicles/{vin}/trips:
+    get:
+      operationId: getTrips
+      summary: Get Trips
+      description: Returns trip history for a connected vehicle within a specified date range.
+      tags:
+      - Trips
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fromDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Start date for trip history
+      - name: toDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: End date for trip history
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 50
+          maximum: 50
+        description: Maximum trips to return
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          default: 0
+        description: Pagination offset
+      - name: includeRoute
+        in: query
+        schema:
+          type: boolean
+          default: false
+        description: Include GPS route for each trip
+      - name: includeSummary
+        in: query
+        schema:
+          type: boolean
+          default: true
+        description: Include trip summary statistics
+      responses:
+        '200':
+          description: Trip history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripHistoryList'
+components:
+  schemas:
+    Coordinates:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        timestamp:
+          type: string
+          format: date-time
+    TripHistoryList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TripHistory'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+    TripHistory:
+      type: object
+      properties:
+        id:
+          type: string
+        vin:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        distanceMiles:
+          type: number
+        durationMinutes:
+          type: integer
+        averageSpeedMph:
+          type: number
+        maxSpeedMph:
+          type: number
+        startAddress:
+          type: string
+        endAddress:
+          type: string
+        startCoordinates:
+          $ref: '#/components/schemas/Coordinates'
+        endCoordinates:
+          $ref: '#/components/schemas/Coordinates'
+        route:
+          type: array
+          items:
+            $ref: '#/components/schemas/Coordinates'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

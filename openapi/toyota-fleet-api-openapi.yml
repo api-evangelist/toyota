@@ -1,0 +1,177 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate Fleet API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: Fleet
+  description: Fleet vehicle management operations
+paths:
+  /fleet/{fleetId}/vehicles:
+    get:
+      operationId: listFleetVehicles
+      summary: List Fleet Vehicles
+      description: Returns all vehicles enrolled in a specific fleet.
+      tags:
+      - Fleet
+      parameters:
+      - name: fleetId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Fleet identifier
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - pending
+        description: Filter by status
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 50
+      responses:
+        '200':
+          description: Fleet vehicles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /fleet/{fleetId}/vehicles/enroll:
+    post:
+      operationId: enrollVehicle
+      summary: Enroll Vehicle
+      description: Enroll a vehicle in the telematics fleet program.
+      tags:
+      - Fleet
+      parameters:
+      - name: fleetId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Fleet identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleEnrollmentRequest'
+      responses:
+        '201':
+          description: Vehicle enrolled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  schemas:
+    VehicleEnrollmentRequest:
+      type: object
+      required:
+      - vin
+      properties:
+        vin:
+          type: string
+          minLength: 17
+          maxLength: 17
+          description: Vehicle Identification Number
+        unitId:
+          type: string
+          description: Telematics unit identifier (if known)
+        services:
+          type: array
+          items:
+            type: string
+          description: List of data services to subscribe to
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    VehicleList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    Vehicle:
+      type: object
+      properties:
+        vin:
+          type: string
+          description: Vehicle Identification Number
+        unitId:
+          type: string
+          description: Telematics unit identifier
+        make:
+          type: string
+          description: Vehicle make (Toyota, Lexus)
+        model:
+          type: string
+        year:
+          type: integer
+        color:
+          type: string
+        trim:
+          type: string
+        enrollmentStatus:
+          type: string
+          enum:
+          - active
+          - inactive
+          - pending
+        fleetId:
+          type: string
+        enrolledAt:
+          type: string
+          format: date-time
+  responses:
+    NotFound:
+      description: Vehicle or resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

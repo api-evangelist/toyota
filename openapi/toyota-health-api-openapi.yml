@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: Toyota Connected Services Climate Health API
+  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  version: 1.0.0
+  contact:
+    name: Toyota Developer Portal
+    url: https://developer.eig.toyota.com/
+servers:
+- url: https://api.toyota.com/connected/v1
+  description: Toyota Connected Services API
+security:
+- bearerAuth: []
+tags:
+- name: Health
+  description: Vehicle health and diagnostics
+paths:
+  /vehicles/{vin}/health:
+    get:
+      operationId: getVehicleHealth
+      summary: Get Vehicle Health
+      description: Returns vehicle health status including warning lights, oil level, and maintenance alerts.
+      tags:
+      - Health
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Vehicle health report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleHealth'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    VehicleHealth:
+      type: object
+      properties:
+        vin:
+          type: string
+        overallStatus:
+          type: string
+          enum:
+          - good
+          - warning
+          - critical
+        oilLevel:
+          type: string
+          enum:
+          - ok
+          - low
+          - critical
+        warnings:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
+              severity:
+                type: string
+                enum:
+                - info
+                - warning
+                - critical
+        maintenanceDue:
+          type: boolean
+        nextMaintenanceMiles:
+          type: integer
+        lastReportedAt:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  responses:
+    NotFound:
+      description: Vehicle or resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
