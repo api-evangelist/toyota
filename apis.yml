@@ -1,62 +1,6 @@
 aid: toyota
 url: https://raw.githubusercontent.com/api-evangelist/toyota/refs/heads/main/apis.yml
 apis:
-- aid: toyota:toyota-vehicle
-  name: Toyota Vehicle API
-  tags:
-  - Automotive
-  - Vehicles
-  - Connected Car
-  - Vehicle Lifecycle
-  - Dealer
-  humanURL: https://developer.eig.toyota.com/apis/vehicle
-  properties:
-  - url: https://developer.eig.toyota.com/apis/vehicle
-    type: Documentation
-  - url: openapi/toyota-vehicle-openapi.yml
-    type: OpenAPI
-  - url: graphql/toyota-graphql.md
-    type: GraphQL
-  description: Toyota Vehicle API provides lifecycle information for vehicles from
-    initial order through retail sale. Enables dealers, fleet managers, and authorized
-    business partners to access vehicle inventory, order status, and vehicle configuration
-    data for Toyota North America vehicles.
-- aid: toyota:toyota-telematics
-  name: Toyota Telematics API
-  tags:
-  - Automotive
-  - Telematics
-  - Connected Car
-  - Fleet Management
-  - Vehicle Health
-  humanURL: https://developer.eig.toyota.com/apis/telematics
-  properties:
-  - url: https://developer.eig.toyota.com/apis/telematics
-    type: Documentation
-  - url: openapi/toyota-telematics-openapi.yml
-    type: OpenAPI
-  description: Toyota Telematics API provides details related to connected services,
-    satellite radio subscriptions, and vehicle health data for enrolled vehicles based
-    on Unit ID or VIN. Supports fleet management, rental car operations, and telematics
-    insurance use cases.
-- aid: toyota:toyota-connected-services
-  name: Toyota Connected Services API
-  tags:
-  - Automotive
-  - Connected Car
-  - Remote Control
-  - Vehicle Status
-  - EV
-  humanURL: https://developer.eig.toyota.com/
-  properties:
-  - url: https://developer.eig.toyota.com/
-    type: Documentation
-  - url: openapi/toyota-connected-services-openapi.yml
-    type: OpenAPI
-  description: Toyota Connected Services API enables authorized applications to access
-    real-time vehicle status, remote control features, location data, electric vehicle
-    charging status, climate control, and trip history for Toyota and Lexus connected
-    vehicles.
 - aid: toyota:toyota-dealers
   name: Toyota Dealers API
   tags:
@@ -69,9 +13,231 @@ apis:
   properties:
   - url: https://developer-sb.eig.toyota.com/apis/dealer
     type: Documentation
-  description: Toyota Dealers API enables searching and retrieving dealer information
-    including location, hours, services offered, and inventory. Supports dealer locator
-    applications and service scheduling integrations for Toyota and Lexus dealers.
+  description: >-
+    Toyota Dealers API enables searching and retrieving dealer information including location, hours,
+    services offered, and inventory. Supports dealer locator applications and service scheduling integrations
+    for Toyota and Lexus dealers.
+- aid: toyota:toyota-climate-api
+  name: Toyota Climate API
+  description: Climate control management
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Climate
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-climate-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-electric-api
+  name: Toyota Electric API
+  description: Electric and hybrid vehicle battery data
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Electric
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-electric-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-fleet-api
+  name: Toyota Fleet API
+  description: Fleet vehicle management operations
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Fleet
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-fleet-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-health-api
+  name: Toyota Health API
+  description: Vehicle health and diagnostics
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-health-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-history-api
+  name: Toyota History API
+  description: Service history
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - History
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-history-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-location-api
+  name: Toyota Location API
+  description: Vehicle location services
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Location
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-location-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-notifications-api
+  name: Toyota Notifications API
+  description: Vehicle notification management
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-notifications-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-remote-api
+  name: Toyota Remote API
+  description: Remote vehicle commands
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Remote
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-remote-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-status-api
+  name: Toyota Status API
+  description: Vehicle status and diagnostics
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Status
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-status-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-subscriptions-api
+  name: Toyota Subscriptions API
+  description: Connected service and satellite radio subscriptions
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-telemetry-api
+  name: Toyota Telemetry API
+  description: Real-time vehicle telemetry data
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Telemetry
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-telemetry-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-trips-api
+  name: Toyota Trips API
+  description: Trip history and driving data
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Trips
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-trips-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
+- aid: toyota:toyota-vehicles-api
+  name: Toyota Vehicles API
+  description: Vehicle registration and management
+  humanURL: https://developer.eig.toyota.com/apis/vehicle
+  tags:
+  - Vehicles
+  properties:
+  - type: OpenAPI
+    url: openapi/toyota-vehicles-api-openapi.yml
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/vehicle
+  - type: GraphQL
+    url: graphql/toyota-graphql.md
+  - type: Documentation
+    url: https://developer.eig.toyota.com/apis/telematics
+  - type: Documentation
+    url: https://developer.eig.toyota.com/
 common:
 - type: AgenticAccess
   url: agentic-access/toyota-agentic-access.yml
@@ -109,7 +275,20 @@ tags:
 - Fleet Management
 - Electric Vehicles
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/toyota.png
 access: 3rd-Party
 created: '2025-02-25'
 modified: '2026-05-19'
