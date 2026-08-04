@@ -1,0 +1,38 @@
+{
+  "provider": "toyota",
+  "sources": [
+    "toyota-climate-api-openapi.yml",
+    "toyota-electric-api-openapi.yml",
+    "toyota-fleet-api-openapi.yml",
+    "toyota-health-api-openapi.yml",
+    "toyota-history-api-openapi.yml",
+    "toyota-location-api-openapi.yml",
+    "toyota-notifications-api-openapi.yml",
+    "toyota-remote-api-openapi.yml",
+    "toyota-status-api-openapi.yml",
+    "toyota-subscriptions-api-openapi.yml",
+    "toyota-telemetry-api-openapi.yml",
+    "toyota-trips-api-openapi.yml",
+    "toyota-vehicles-api-openapi.yml"
+  ],
+  "outputs": [
+    "toyota-climate-api-openapi.yml",
+    "toyota-electric-api-openapi.yml",
+    "toyota-fleet-api-openapi.yml",
+    "toyota-health-api-openapi.yml",
+    "toyota-history-api-openapi.yml",
+    "toyota-location-api-openapi.yml",
+    "toyota-notifications-api-openapi.yml",
+    "toyota-remote-api-openapi.yml",
+    "toyota-status-api-openapi.yml",
+    "toyota-subscriptions-api-openapi.yml",
+    "toyota-telemetry-api-openapi.yml",
+    "toyota-trips-api-openapi.yml",
+    "toyota-vehicles-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
