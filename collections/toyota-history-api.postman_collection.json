@@ -1,0 +1,192 @@
+{
+  "item": [
+    {
+      "id": "a50db905-5c87-43a5-940f-7ea3cb680b3b",
+      "name": "History",
+      "description": {
+        "content": "Service history",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b7989164-9671-4d4f-914a-eb34b6e14109",
+          "name": "Get Service History",
+          "request": {
+            "name": "Get Service History",
+            "description": {
+              "content": "Returns service history records for the vehicle.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicles",
+                ":vin",
+                "service-history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vin",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d6b396c2-5ebe-4f67-a433-9badae0e6eb6",
+              "name": "Service history",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    ":vin",
+                    "service-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"vin\": \"string\",\n      \"category\": \"string\",\n      \"description\": \"string\",\n      \"serviceDate\": \"1986-05-15\",\n      \"mileage\": 1664,\n      \"dealerCode\": \"string\",\n      \"dealerName\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"vin\": \"string\",\n      \"category\": \"string\",\n      \"description\": \"string\",\n      \"serviceDate\": \"2006-01-23\",\n      \"mileage\": 3133,\n      \"dealerCode\": \"string\",\n      \"dealerName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4482c78-d737-48cd-9935-6f1b4a6340e1",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    ":vin",
+                    "service-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.toyota.com/connected/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7898ee1e-4a55-427e-954e-347676d907b6",
+    "name": "Toyota Connected Services Climate History API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.\n\nContact Support:\n Name: Toyota Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

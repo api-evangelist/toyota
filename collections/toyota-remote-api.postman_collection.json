@@ -1,0 +1,281 @@
+{
+  "item": [
+    {
+      "id": "62d0a22d-f93c-42aa-9dad-871199a01aa2",
+      "name": "Remote",
+      "description": {
+        "content": "Remote vehicle commands",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "585d74d4-7f90-4e66-bb7a-f1fc259966eb",
+          "name": "Send Climate Command",
+          "request": {
+            "name": "Send Climate Command",
+            "description": {
+              "content": "Send a climate control command to start or stop the vehicle's climate system remotely.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicles",
+                ":vin",
+                "climate",
+                "command"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vin",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"command\": \"<string>\",\n  \"temperature\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "10c4d5be-2905-4dc9-8e13-6e76fee430ba",
+              "name": "Command sent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    ":vin",
+                    "climate",
+                    "command"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"command\": \"<string>\",\n  \"temperature\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"status\": \"string\",\n  \"returnCode\": \"string\",\n  \"timestamp\": \"2020-01-14T18:29:34.133Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3ecd8584-8a08-4c21-9799-7b3064085ae8",
+          "name": "Send Remote Command",
+          "request": {
+            "name": "Send Remote Command",
+            "description": {
+              "content": "Send a remote command to the vehicle such as lock, unlock, or horn.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicles",
+                ":vin",
+                "remote-command"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vin",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"command\": \"<string>\",\n  \"beeps\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a4aaa45f-685a-4282-89a3-7b6bfc23a546",
+              "name": "Command accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    ":vin",
+                    "remote-command"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"command\": \"<string>\",\n  \"beeps\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"status\": \"string\",\n  \"returnCode\": \"string\",\n  \"timestamp\": \"2020-01-14T18:29:34.133Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.toyota.com/connected/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4920ec35-053a-4f11-9d38-42546a12e17c",
+    "name": "Toyota Connected Services Climate Remote API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.\n\nContact Support:\n Name: Toyota Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

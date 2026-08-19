@@ -1,0 +1,292 @@
+{
+  "item": [
+    {
+      "id": "5732a6f9-88a2-40c6-a319-303a6fbfc010",
+      "name": "Electric",
+      "description": {
+        "content": "Electric and hybrid vehicle battery data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "27fdffa3-54b3-4c7f-a21e-304cacf4e615",
+          "name": "Get Electric Status",
+          "request": {
+            "name": "Get Electric Status",
+            "description": {
+              "content": "Returns EV battery, charging status, and electric range data for hybrid and EV models.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicles",
+                ":vin",
+                "electric"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vin",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7d2f3cbb-a57c-40d1-b007-c9059143d709",
+              "name": "Electric vehicle status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    ":vin",
+                    "electric"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vin\": \"string\",\n  \"batteryLevel\": 8798,\n  \"batteryRange\": 7623.223146014151,\n  \"fuelLevel\": 982,\n  \"fuelRange\": 9690.926209212741,\n  \"totalRange\": 377.20135430874825,\n  \"chargingStatus\": \"charging\",\n  \"pluggedIn\": false,\n  \"estimatedChargeCompleteTime\": \"1950-05-14T12:53:26.638Z\",\n  \"lastUpdatedAt\": \"1965-01-10T06:13:34.255Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d08e7f0-1705-4230-bf71-67002f8b25c7",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    ":vin",
+                    "electric"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8181019b-e0de-4e1f-a7f8-7180837b757b",
+          "name": "Refresh Electric Status",
+          "request": {
+            "name": "Refresh Electric Status",
+            "description": {
+              "content": "Request an updated state-of-charge reading from the vehicle.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicles",
+                ":vin",
+                "electric",
+                "refresh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vin",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "23b20c2f-a195-4088-be2f-cc605f57a0ac",
+              "name": "Refresh request sent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    ":vin",
+                    "electric",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"status\": \"string\",\n  \"returnCode\": \"string\",\n  \"timestamp\": \"2017-02-08T10:02:47.630Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.toyota.com/connected/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a3d72447-df06-49a8-b177-3c9743909769",
+    "name": "Toyota Connected Services Climate Electric API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.\n\nContact Support:\n Name: Toyota Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

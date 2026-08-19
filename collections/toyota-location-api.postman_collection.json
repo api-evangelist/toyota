@@ -1,0 +1,192 @@
+{
+  "item": [
+    {
+      "id": "fb7200fa-39ed-4966-851b-d047ae6d00e5",
+      "name": "Location",
+      "description": {
+        "content": "Vehicle location services",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d0025546-65fc-40db-910d-7a737f4d928c",
+          "name": "Get Vehicle Location",
+          "request": {
+            "name": "Get Vehicle Location",
+            "description": {
+              "content": "Returns the last known GPS location of the vehicle when parked.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicles",
+                ":vin",
+                "location"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vin",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ec7b142-62a2-4be3-ba93-0d936a60f925",
+              "name": "Vehicle location",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    ":vin",
+                    "location"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vin\": \"string\",\n  \"latitude\": 6189.096725127318,\n  \"longitude\": 6512.66819057163,\n  \"isParked\": true,\n  \"timestamp\": \"2022-02-20T12:02:19.293Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef96283e-e921-4929-b483-06a80292e45c",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    ":vin",
+                    "location"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.toyota.com/connected/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0174b4f6-af83-4af9-b2dd-b5dbab332ecd",
+    "name": "Toyota Connected Services Climate Location API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.\n\nContact Support:\n Name: Toyota Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

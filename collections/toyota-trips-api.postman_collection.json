@@ -1,0 +1,201 @@
+{
+  "item": [
+    {
+      "id": "2324ad79-85e6-4e59-ab77-7393c7f18096",
+      "name": "Trips",
+      "description": {
+        "content": "Trip history and driving data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "87964fb9-9c0c-44e3-b3f7-939416a9a8a9",
+          "name": "Get Trips",
+          "request": {
+            "name": "Get Trips",
+            "description": {
+              "content": "Returns trip history for a connected vehicle within a specified date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicles",
+                ":vin",
+                "trips"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "(Required) Start date for trip history"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "(Required) End date for trip history"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum trips to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Pagination offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeRoute",
+                  "value": "false",
+                  "description": "Include GPS route for each trip"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeSummary",
+                  "value": "true",
+                  "description": "Include trip summary statistics"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vin",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e6d4700e-d314-446f-8b47-34d29e15e9d0",
+              "name": "Trip history",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    ":vin",
+                    "trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "includeRoute",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeSummary",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"vin\": \"string\",\n      \"startTime\": \"1969-05-03T06:24:05.549Z\",\n      \"endTime\": \"2026-05-14T07:22:11.574Z\",\n      \"distanceMiles\": 9761.736582221803,\n      \"durationMinutes\": 2672,\n      \"averageSpeedMph\": 309.03932325969777,\n      \"maxSpeedMph\": 6847.3559604926195,\n      \"startAddress\": \"string\",\n      \"endAddress\": \"string\",\n      \"startCoordinates\": {\n        \"latitude\": 1347.1236229707606,\n        \"longitude\": 8622.741905032015,\n        \"timestamp\": \"2022-04-27T03:42:14.762Z\"\n      },\n      \"endCoordinates\": {\n        \"latitude\": 753.1723760473242,\n        \"longitude\": 7337.10179237369,\n        \"timestamp\": \"1951-06-13T01:04:28.628Z\"\n      },\n      \"route\": [\n        {\n          \"latitude\": 6783.231764431966,\n          \"longitude\": 9684.247807946833,\n          \"timestamp\": \"1952-09-05T04:32:03.979Z\"\n        },\n        {\n          \"latitude\": 6427.029776223434,\n          \"longitude\": 454.57235877625067,\n          \"timestamp\": \"1948-11-11T06:57:20.638Z\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"vin\": \"string\",\n      \"startTime\": \"1947-07-15T01:35:05.503Z\",\n      \"endTime\": \"1960-05-30T19:20:35.085Z\",\n      \"distanceMiles\": 6758.125845567816,\n      \"durationMinutes\": 3953,\n      \"averageSpeedMph\": 792.2846290364228,\n      \"maxSpeedMph\": 1580.662495240236,\n      \"startAddress\": \"string\",\n      \"endAddress\": \"string\",\n      \"startCoordinates\": {\n        \"latitude\": 6191.160469017166,\n        \"longitude\": 2370.976825303305,\n        \"timestamp\": \"1963-08-06T19:55:28.355Z\"\n      },\n      \"endCoordinates\": {\n        \"latitude\": 842.0163374909506,\n        \"longitude\": 6672.580540772654,\n        \"timestamp\": \"1972-07-21T00:24:32.589Z\"\n      },\n      \"route\": [\n        {\n          \"latitude\": 3297.532070333611,\n          \"longitude\": 896.9181443810959,\n          \"timestamp\": \"1963-04-15T04:29:44.793Z\"\n        },\n        {\n          \"latitude\": 339.96151935106633,\n          \"longitude\": 3068.4844539281544,\n          \"timestamp\": \"1963-09-23T15:42:05.959Z\"\n        }\n      ]\n    }\n  ],\n  \"total\": 4014,\n  \"limit\": 1891,\n  \"offset\": 6822\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.toyota.com/connected/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9578e6a2-4dda-46a1-95bf-f87554f72a98",
+    "name": "Toyota Connected Services Climate Trips API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.\n\nContact Support:\n Name: Toyota Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

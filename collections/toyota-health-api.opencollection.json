@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toyota Connected Services Climate Health API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vehicle Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/health",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path",
+                "description": "Vehicle Identification Number"
+              }
+            ]
+          },
+          "docs": "Returns vehicle health status including warning lights, oil level, and maintenance alerts."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

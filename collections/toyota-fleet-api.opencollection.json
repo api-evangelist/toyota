@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toyota Connected Services Climate Fleet API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fleet",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Fleet Vehicles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/fleet/:fleetId/vehicles",
+            "params": [
+              {
+                "name": "fleetId",
+                "value": "",
+                "type": "path",
+                "description": "Fleet identifier"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns all vehicles enrolled in a specific fleet."
+        },
+        {
+          "info": {
+            "name": "Enroll Vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.toyota.com/connected/v1/fleet/:fleetId/vehicles/enroll",
+            "params": [
+              {
+                "name": "fleetId",
+                "value": "",
+                "type": "path",
+                "description": "Fleet identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enroll a vehicle in the telematics fleet program."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

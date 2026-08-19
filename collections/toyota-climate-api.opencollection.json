@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toyota Connected Services Climate API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Climate",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Climate Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/climate",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the current climate control settings and status for the vehicle."
+        },
+        {
+          "info": {
+            "name": "Update Climate Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/climate",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update climate control settings for the vehicle."
+        },
+        {
+          "info": {
+            "name": "Send Climate Command",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/climate/command",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a climate control command to start or stop the vehicle's climate system remotely."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

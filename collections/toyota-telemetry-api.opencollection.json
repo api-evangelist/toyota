@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toyota Connected Services Climate Telemetry API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Telemetry",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vehicle Telemetry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/telemetry",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path",
+                "description": "Vehicle Identification Number"
+              }
+            ]
+          },
+          "docs": "Returns current telemetry data including odometer, fuel level, and distance."
+        },
+        {
+          "info": {
+            "name": "Get Vehicle Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/location",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path",
+                "description": "Vehicle Identification Number"
+              }
+            ]
+          },
+          "docs": "Returns the current or last known GPS location of a connected vehicle."
+        },
+        {
+          "info": {
+            "name": "Get Vehicle Trips",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/trips",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path",
+                "description": "Vehicle Identification Number"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for trip history"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for trip history"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of trips to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "includeRoute",
+                "value": "",
+                "type": "query",
+                "description": "Include GPS route coordinates for each trip"
+              }
+            ]
+          },
+          "docs": "Returns trip history for a connected vehicle within a date range."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

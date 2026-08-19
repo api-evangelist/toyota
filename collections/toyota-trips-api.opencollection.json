@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toyota Connected Services Climate Trips API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Trips",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Trips",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/trips",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for trip history"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for trip history"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum trips to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "includeRoute",
+                "value": "",
+                "type": "query",
+                "description": "Include GPS route for each trip"
+              },
+              {
+                "name": "includeSummary",
+                "value": "",
+                "type": "query",
+                "description": "Include trip summary statistics"
+              }
+            ]
+          },
+          "docs": "Returns trip history for a connected vehicle within a specified date range."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

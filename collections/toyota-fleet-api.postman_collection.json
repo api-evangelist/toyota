@@ -1,0 +1,418 @@
+{
+  "item": [
+    {
+      "id": "7ac66dd0-12bc-4d82-be13-9d70220de2ac",
+      "name": "Fleet",
+      "description": {
+        "content": "Fleet vehicle management operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6c9e2eb1-0bad-40d3-b50c-5ecec8b3b58d",
+          "name": "List Fleet Vehicles",
+          "request": {
+            "name": "List Fleet Vehicles",
+            "description": {
+              "content": "Returns all vehicles enrolled in a specific fleet.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fleet",
+                ":fleetId",
+                "vehicles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "fleetId",
+                  "description": "(Required) Fleet identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "69b034cd-eb51-4b7a-8d89-f2989e3df3be",
+              "name": "Fleet vehicles",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fleet",
+                    ":fleetId",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fleetId",
+                      "description": "(Required) Fleet identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"vin\": \"string\",\n      \"unitId\": \"string\",\n      \"make\": \"string\",\n      \"model\": \"string\",\n      \"year\": 9758,\n      \"color\": \"string\",\n      \"trim\": \"string\",\n      \"enrollmentStatus\": \"inactive\",\n      \"fleetId\": \"string\",\n      \"enrolledAt\": \"1987-02-09T12:29:38.317Z\"\n    },\n    {\n      \"vin\": \"string\",\n      \"unitId\": \"string\",\n      \"make\": \"string\",\n      \"model\": \"string\",\n      \"year\": 7343,\n      \"color\": \"string\",\n      \"trim\": \"string\",\n      \"enrollmentStatus\": \"active\",\n      \"fleetId\": \"string\",\n      \"enrolledAt\": \"1999-09-26T06:37:32.615Z\"\n    }\n  ],\n  \"total\": 5751,\n  \"page\": 9600,\n  \"limit\": 1936\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "480710f6-4c0a-4d86-99f6-e75f2b13ec19",
+              "name": "Vehicle or resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fleet",
+                    ":fleetId",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fleetId",
+                      "description": "(Required) Fleet identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48976670-8821-4639-8961-c420ea3d47f1",
+          "name": "Enroll Vehicle",
+          "request": {
+            "name": "Enroll Vehicle",
+            "description": {
+              "content": "Enroll a vehicle in the telematics fleet program.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fleet",
+                ":fleetId",
+                "vehicles",
+                "enroll"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "fleetId",
+                  "description": "(Required) Fleet identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vin\": \"<string>\",\n  \"unitId\": \"<string>\",\n  \"services\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "559ee998-8641-481e-8c3a-544492a9ec5c",
+              "name": "Vehicle enrolled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fleet",
+                    ":fleetId",
+                    "vehicles",
+                    "enroll"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fleetId",
+                      "description": "(Required) Fleet identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vin\": \"<string>\",\n  \"unitId\": \"<string>\",\n  \"services\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vin\": \"string\",\n  \"unitId\": \"string\",\n  \"make\": \"string\",\n  \"model\": \"string\",\n  \"year\": 6423,\n  \"color\": \"string\",\n  \"trim\": \"string\",\n  \"enrollmentStatus\": \"active\",\n  \"fleetId\": \"string\",\n  \"enrolledAt\": \"2010-08-04T05:00:56.112Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43a64191-1ec2-4fb6-a6cb-de00e9cb4919",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fleet",
+                    ":fleetId",
+                    "vehicles",
+                    "enroll"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fleetId",
+                      "description": "(Required) Fleet identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vin\": \"<string>\",\n  \"unitId\": \"<string>\",\n  \"services\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.toyota.com/connected/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "66446de7-a5af-44ed-9fd4-0e4abe3f4286",
+    "name": "Toyota Connected Services Climate Fleet API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.\n\nContact Support:\n Name: Toyota Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

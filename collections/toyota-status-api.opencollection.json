@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toyota Connected Services Climate Status API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vehicle Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/status",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the current status and general information for a connected vehicle."
+        },
+        {
+          "info": {
+            "name": "Refresh Vehicle Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/status/refresh",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Wake the vehicle and refresh its status data. Requires the vehicle to be connected."
+        },
+        {
+          "info": {
+            "name": "Get Vehicle Health Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/health",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns vehicle health information including oil level and warning lights."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

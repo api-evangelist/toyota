@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toyota Connected Services Climate Location API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Location",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vehicle Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/location",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the last known GPS location of the vehicle when parked."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

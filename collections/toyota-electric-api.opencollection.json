@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toyota Connected Services Climate Electric API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Electric",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Electric Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/electric",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns EV battery, charging status, and electric range data for hybrid and EV models."
+        },
+        {
+          "info": {
+            "name": "Refresh Electric Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/electric/refresh",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Request an updated state-of-charge reading from the vehicle."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

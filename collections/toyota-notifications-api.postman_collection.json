@@ -1,0 +1,151 @@
+{
+  "item": [
+    {
+      "id": "4cab9bad-a93c-44aa-a754-7cad9a1bc52c",
+      "name": "Notifications",
+      "description": {
+        "content": "Vehicle notification management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "39bb945f-1d9c-4c9b-bf68-fa835ce1d304",
+          "name": "Get Vehicle Notifications",
+          "request": {
+            "name": "Get Vehicle Notifications",
+            "description": {
+              "content": "Returns all notifications for the vehicle including alerts, messages, and recalls.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicles",
+                ":vin",
+                "notifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "unreadOnly",
+                  "value": "false",
+                  "description": "Return only unread notifications"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vin",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ad1a7ee-c193-4e8d-a2c4-dd5cd63db040",
+              "name": "Notifications list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    ":vin",
+                    "notifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "unreadOnly",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"maintenance\",\n      \"title\": \"string\",\n      \"message\": \"string\",\n      \"isRead\": true,\n      \"severity\": \"critical\",\n      \"createdAt\": \"2023-10-09T18:32:49.758Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"maintenance\",\n      \"title\": \"string\",\n      \"message\": \"string\",\n      \"isRead\": true,\n      \"severity\": \"info\",\n      \"createdAt\": \"1965-11-16T04:53:39.855Z\"\n    }\n  ],\n  \"total\": 5073,\n  \"unreadCount\": 1202\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.toyota.com/connected/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2e0adb4a-491e-40ae-9ab1-fcbbc8bcc6a0",
+    "name": "Toyota Connected Services Climate Notifications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.\n\nContact Support:\n Name: Toyota Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toyota Connected Services Climate Notifications API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Notifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vehicle Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/notifications",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "unreadOnly",
+                "value": "",
+                "type": "query",
+                "description": "Return only unread notifications"
+              }
+            ]
+          },
+          "docs": "Returns all notifications for the vehicle including alerts, messages, and recalls."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

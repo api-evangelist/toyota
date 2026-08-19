@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toyota Connected Services Climate Remote API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Remote",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send Climate Command",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/climate/command",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a climate control command to start or stop the vehicle's climate system remotely."
+        },
+        {
+          "info": {
+            "name": "Send Remote Command",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.toyota.com/connected/v1/vehicles/:vin/remote-command",
+            "params": [
+              {
+                "name": "vin",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a remote command to the vehicle such as lock, unlock, or horn."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
