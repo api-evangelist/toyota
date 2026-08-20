@@ -124,6 +124,8 @@ apis:
   description: Vehicle notification management
   humanURL: https://developer.eig.toyota.com/apis/vehicle
   tags:
+  - Notification
+  tags_raw:
   - Notifications
   properties:
   - type: OpenAPI
@@ -175,6 +177,8 @@ apis:
   description: Connected service and satellite radio subscriptions
   humanURL: https://developer.eig.toyota.com/apis/vehicle
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
