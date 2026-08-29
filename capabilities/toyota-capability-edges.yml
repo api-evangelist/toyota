@@ -1,0 +1,134 @@
+slug: toyota
+provider: Toyota
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Automotive & Mobility
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 12
+edges:
+- tag: Climate
+  spec_file: toyota-climate-api-openapi.yml
+  capability_id: BC-3460
+  capability_id_l1: BC-3460
+  capability_name: Vehicle Connected Services Management
+  confidence: 0.85
+  evidence: POST /vehicles/{vin}/climate/command sendClimateCommand; "remote control features for Toyota
+    and Lexus connected vehicles"
+  reason: Remote climate control commands sent to connected vehicles by VIN are connected-vehicle service
+    operations. L2 left null because remote command dispatch spans connectivity-platform and customer-facing
+    connected-service sub-capabilities.
+- tag: Telemetry
+  spec_file: toyota-telemetry-api-openapi.yml
+  capability_id: BC-3460
+  capability_id_l1: BC-3460
+  capability_name: Vehicle Connected Services Management
+  confidence: 0.82
+  evidence: GET /vehicles/{vin}/telemetry getVehicleTelemetry; GET /vehicles/{vin}/trips getVehicleTrips;
+    schemas VehicleTelemetry, TripLocation
+  reason: Telematics data (telemetry, location, trips) served from the OEM vehicle cloud — connected vehicle
+    services operations; sub-capability between connectivity platform and data platform is ambiguous.
+- tag: Electric
+  spec_file: toyota-electric-api-openapi.yml
+  capability_id: BC-3460
+  capability_id_l1: BC-3460
+  capability_name: Vehicle Connected Services Management
+  confidence: 0.8
+  evidence: GET /vehicles/{vin}/electric getElectricStatus; "electric vehicle charging data"
+  reason: Retrieves EV state-of-charge/charging status from the connected vehicle via the OEM cloud —
+    vehicle connected services, not charge-point network operations (no charge points, sessions or tariffs
+    here).
+- tag: Location
+  spec_file: toyota-location-api-openapi.yml
+  capability_id: BC-3460
+  capability_id_l1: BC-3460
+  capability_name: Vehicle Connected Services Management
+  confidence: 0.8
+  evidence: GET /vehicles/{vin}/location getVehiclePosition Get Vehicle Location; "access real-time vehicle
+    data and remote control features for Toyota and Lexus connected vehicles"
+  reason: Read of live vehicle position from the OEM connected-services platform — connected vehicle service
+    operations. Which sub-capability (connectivity/telemetry platform vs vehicle data platform) is not
+    distinguishable, so L1 only.
+- tag: Remote
+  spec_file: toyota-remote-api-openapi.yml
+  capability_id: BC-3460
+  capability_id_l1: BC-3460
+  capability_name: Vehicle Connected Services Management
+  confidence: 0.8
+  evidence: POST /vehicles/{vin}/remote-command sendRemoteCommand Send Remote Command; "remote control
+    features for Toyota and Lexus connected vehicles"
+  reason: Remote command dispatch to connected vehicles (climate, lock, etc.) is operation of connected
+    vehicle services.
+- tag: Status
+  spec_file: toyota-status-api-openapi.yml
+  capability_id: BC-3460
+  capability_id_l1: BC-3460
+  capability_name: Vehicle Connected Services Management
+  confidence: 0.78
+  evidence: GET /vehicles/{vin}/status Get Vehicle Status; GET /vehicles/{vin}/health getVehicleHealthStatus;
+    schemas VehicleHealth, VehicleStatus
+  reason: Vehicle status and health telemetry exposed via the connected services platform. Could also
+    touch OEM diagnostics aftersales, so only L1 asserted.
+- tag: Subscriptions
+  spec_file: toyota-subscriptions-api-openapi.yml
+  capability_id: BC-3460.30
+  capability_id_l1: BC-3460
+  capability_name: In-Vehicle App and Subscription Management
+  confidence: 0.75
+  evidence: GET /vehicles/{vin}/subscriptions getVehicleSubscriptions; "details related to connected services
+    and satellite radio subscriptions for requested vehicles"
+  reason: Exposes connected-service and satellite-radio subscription status per vehicle, matching in-vehicle
+    subscription lifecycle management.
+- tag: Trips
+  spec_file: toyota-trips-api-openapi.yml
+  capability_id: BC-3460
+  capability_id_l1: BC-3460
+  capability_name: Vehicle Connected Services Management
+  confidence: 0.75
+  evidence: GET /vehicles/{vin}/trips getTrips Get Trips; schemas TripHistory, TripHistoryList
+  reason: Trip history data from connected vehicles, part of the OEM connected-services/vehicle data offering.
+- tag: Notifications
+  spec_file: toyota-notifications-api-openapi.yml
+  capability_id: BC-3460
+  capability_id_l1: BC-3460
+  capability_name: Vehicle Connected Services Management
+  confidence: 0.72
+  evidence: GET /vehicles/{vin}/notifications getVehicleNotifications Get Vehicle Notifications; schemas
+    NotificationList, Notification
+  reason: Vehicle notifications delivered through the Toyota Connected Services platform; a connected-vehicle
+    service surface rather than generic messaging. Sub-capability unclear.
+- tag: Fleet
+  spec_file: toyota-fleet-api-openapi.yml
+  capability_id: BC-3460
+  capability_id_l1: BC-3460
+  capability_name: Vehicle Connected Services Management
+  confidence: 0.7
+  evidence: POST /fleet/{fleetId}/vehicles/enroll enrollVehicle; "connected service subscription status,
+    and telematics-based fleet management capabilities"
+  reason: Enrolling vehicles into telematics/connected services and listing enrolled fleet vehicles is
+    connected-service subscription/activation operations. Confidence moderate as it straddles connectivity
+    provisioning and connected-service customer operations.
+- tag: History
+  spec_file: toyota-history-api-openapi.yml
+  capability_id: BC-3450
+  capability_id_l1: BC-3450
+  capability_name: Vehicle Aftersales & Warranty Management
+  confidence: 0.7
+  evidence: GET /vehicles/{vin}/service-history getServiceHistory; schemas ServiceHistory, ServiceHistoryList
+  reason: Exposes per-VIN dealer service history, an OEM aftersales record. L2 left null since no sub-capability
+    specifically covers service-history records (it is neither warranty claims nor recall management).
+- tag: Vehicles
+  spec_file: toyota-vehicles-api-openapi.yml
+  capability_id: BC-3460
+  capability_id_l1: BC-3460
+  capability_name: Vehicle Connected Services Management
+  confidence: 0.7
+  evidence: GET /vehicles listConnectedVehicles List Connected Vehicles; PUT /vehicles/{vin} updateVehicleAlias
+  reason: Enrolment registry of connected vehicles and per-vehicle alias maintenance within the connected-services
+    platform; generic CRUD so no L2 asserted.

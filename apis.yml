@@ -243,6 +243,9 @@ apis:
   - type: Documentation
     url: https://developer.eig.toyota.com/
 common:
+- type: CapabilityMap
+  url: capabilities/toyota-capability-edges.yml
+  name: Toyota Business Capability Map
 - type: AgenticAccess
   url: agentic-access/toyota-agentic-access.yml
 - type: VulnerabilityDisclosure
