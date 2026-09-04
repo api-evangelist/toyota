@@ -295,22 +295,23 @@ deliveryModel:
   method: derived
 accessModel:
   pricing: enterprise
-  onboarding: self-serve
+  onboarding: unknown
   trial: false
   try_now: false
   public: false
-  label: Enterprise · Self-serve signup
-  confidence: high
+  label: Enterprise
+  confidence: medium
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
+  - security
+  generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/toyota.png
 access: 3rd-Party
 created: '2025-02-25'
 modified: '2026-05-19'
-position: Consumer
+position: Consuming
 description: Toyota Motor Corporation is a Japanese multinational automotive manufacturer
   that designs, manufactures, and sells vehicles, including cars, trucks, and buses.
   Founded in 1937, Toyota has become one of the largest automakers in the world, known
