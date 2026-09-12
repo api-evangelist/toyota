@@ -5,12 +5,13 @@
       "source": "https://pressroom.toyota.com/feed/",
       "feed_url": "https://pressroom.toyota.com/feed/",
       "title": "Toyota USA Newsroom",
-      "saved": 2,
+      "saved": 0,
       "nature": "undetermined",
-      "nature_basis": null
+      "nature_basis": null,
+      "error": "fetch_failed: HTTPError"
     }
   ],
-  "fetched": "2026-08-30T22:05:13Z",
+  "fetched": "2026-09-06T18:58:10Z",
   "post_count": 62,
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
