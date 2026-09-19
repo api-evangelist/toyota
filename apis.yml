@@ -7,6 +7,12 @@ apis:
   - Automotive
   - Dealers
   - Dealer Locator
+  - Services
+  - Inventory
+  tags_raw:
+  - Automotive
+  - Dealers
+  - Dealer Locator
   - Service
   - Inventory
   humanURL: https://developer-sb.eig.toyota.com/apis/dealer
