@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Toyota Connected Services Climate API
   description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
@@ -102,36 +102,6 @@ components:
         temperature:
           type: number
           description: Target temperature for start command
-    ClimateSettings:
-      type: object
-      properties:
-        temperature:
-          type: number
-          description: Target temperature in Fahrenheit
-        fanSpeed:
-          type: integer
-          minimum: 1
-          maximum: 5
-        mode:
-          type: string
-          enum:
-          - auto
-          - cool
-          - heat
-          - defrost
-    RefreshStatus:
-      type: object
-      properties:
-        requestId:
-          type: string
-        status:
-          type: string
-        returnCode:
-          type: string
-          description: Return code (000000 indicates success)
-        timestamp:
-          type: string
-          format: date-time
     ClimateStatus:
       type: object
       properties:
@@ -156,6 +126,36 @@ components:
         lastUpdatedAt:
           type: string
           format: date-time
+    RefreshStatus:
+      type: object
+      properties:
+        requestId:
+          type: string
+        status:
+          type: string
+        returnCode:
+          type: string
+          description: Return code (000000 indicates success)
+        timestamp:
+          type: string
+          format: date-time
+    ClimateSettings:
+      type: object
+      properties:
+        temperature:
+          type: number
+          description: Target temperature in Fahrenheit
+        fanSpeed:
+          type: integer
+          minimum: 1
+          maximum: 5
+        mode:
+          type: string
+          enum:
+          - auto
+          - cool
+          - heat
+          - defrost
   securitySchemes:
     bearerAuth:
       type: http

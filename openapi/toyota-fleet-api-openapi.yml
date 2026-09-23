@@ -1,14 +1,14 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Toyota Connected Services Climate Fleet API
-  description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
+  title: Toyota Telematics Fleet API
+  description: Toyota Telematics API provides details related to connected services and satellite radio subscriptions for requested vehicles based on Unit ID or VIN. Includes vehicle health data, odometer readings, connected service subscription status, and telematics-based fleet management capabilities for Toyota North America vehicles.
   version: 1.0.0
   contact:
     name: Toyota Developer Portal
-    url: https://developer.eig.toyota.com/
+    url: https://developer.eig.toyota.com/apis/telematics
 servers:
-- url: https://api.toyota.com/connected/v1
-  description: Toyota Connected Services API
+- url: https://api.eig.toyota.com/telematics/v1
+  description: Toyota Telematics Production API
 security:
 - bearerAuth: []
 tags:
@@ -87,6 +87,19 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Vehicle or resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     VehicleEnrollmentRequest:
       type: object
@@ -113,19 +126,6 @@ components:
           type: string
         message:
           type: string
-    VehicleList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Vehicle'
-        total:
-          type: integer
-        page:
-          type: integer
-        limit:
-          type: integer
     Vehicle:
       type: object
       properties:
@@ -157,19 +157,19 @@ components:
         enrolledAt:
           type: string
           format: date-time
-  responses:
-    NotFound:
-      description: Vehicle or resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    VehicleList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
   securitySchemes:
     bearerAuth:
       type: http

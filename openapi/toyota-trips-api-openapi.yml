@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Toyota Connected Services Climate Trips API
+  title: Toyota Connected Services Trips API
   description: Toyota Connected Services API enables authorized applications to access real-time vehicle data and remote control features for Toyota and Lexus connected vehicles. Provides vehicle status, location, electric vehicle charging data, climate control, trip history, notifications, and service history for vehicles enrolled in Toyota Connected Services.
   version: 1.0.0
   contact:
@@ -76,18 +76,6 @@ paths:
                 $ref: '#/components/schemas/TripHistoryList'
 components:
   schemas:
-    Coordinates:
-      type: object
-      properties:
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-        timestamp:
-          type: string
-          format: date-time
     TripHistoryList:
       type: object
       properties:
@@ -101,6 +89,18 @@ components:
           type: integer
         offset:
           type: integer
+    Coordinates:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        timestamp:
+          type: string
+          format: date-time
     TripHistory:
       type: object
       properties:
