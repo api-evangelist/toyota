@@ -34,8 +34,6 @@ apis:
     url: openapi/toyota-climate-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -51,8 +49,6 @@ apis:
     url: openapi/toyota-electric-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -68,8 +64,6 @@ apis:
     url: openapi/toyota-fleet-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -85,8 +79,6 @@ apis:
     url: openapi/toyota-health-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -102,8 +94,6 @@ apis:
     url: openapi/toyota-history-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -119,8 +109,6 @@ apis:
     url: openapi/toyota-location-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -138,8 +126,6 @@ apis:
     url: openapi/toyota-notifications-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -155,8 +141,6 @@ apis:
     url: openapi/toyota-remote-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -172,8 +156,6 @@ apis:
     url: openapi/toyota-status-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -191,8 +173,6 @@ apis:
     url: openapi/toyota-subscriptions-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -208,8 +188,6 @@ apis:
     url: openapi/toyota-telemetry-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -225,8 +203,6 @@ apis:
     url: openapi/toyota-trips-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
@@ -242,8 +218,6 @@ apis:
     url: openapi/toyota-vehicles-api-openapi.yml
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/vehicle
-  - type: GraphQL
-    url: graphql/toyota-graphql.md
   - type: Documentation
     url: https://developer.eig.toyota.com/apis/telematics
   - type: Documentation
