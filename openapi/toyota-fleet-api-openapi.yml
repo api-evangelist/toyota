@@ -87,20 +87,27 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  responses:
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Vehicle or resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    VehicleList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
     VehicleEnrollmentRequest:
       type: object
       required:
@@ -119,13 +126,6 @@ components:
           items:
             type: string
           description: List of data services to subscribe to
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     Vehicle:
       type: object
       properties:
@@ -157,19 +157,19 @@ components:
         enrolledAt:
           type: string
           format: date-time
-    VehicleList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Vehicle'
-        total:
-          type: integer
-        page:
-          type: integer
-        limit:
-          type: integer
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Vehicle or resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

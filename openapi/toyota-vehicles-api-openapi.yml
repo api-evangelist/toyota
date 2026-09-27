@@ -91,13 +91,6 @@ paths:
       description: Toyota Connected Services API
 components:
   schemas:
-    ConnectedVehicleList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConnectedVehicle'
     ConnectedVehicle:
       type: object
       properties:
@@ -131,6 +124,26 @@ components:
           type: string
         message:
           type: string
+    ConnectedVehicleList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectedVehicle'
+    VehicleList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
     Vehicle:
       type: object
       properties:
@@ -162,28 +175,15 @@ components:
         enrolledAt:
           type: string
           format: date-time
-    VehicleList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Vehicle'
-        total:
-          type: integer
-        page:
-          type: integer
-        limit:
-          type: integer
   responses:
-    NotFound:
-      description: Vehicle not found
+    Unauthorized:
+      description: Authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required
+    NotFound:
+      description: Vehicle not found
       content:
         application/json:
           schema:

@@ -76,6 +76,18 @@ paths:
                 $ref: '#/components/schemas/TripHistoryList'
 components:
   schemas:
+    Coordinates:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        timestamp:
+          type: string
+          format: date-time
     TripHistoryList:
       type: object
       properties:
@@ -89,18 +101,6 @@ components:
           type: integer
         offset:
           type: integer
-    Coordinates:
-      type: object
-      properties:
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-        timestamp:
-          type: string
-          format: date-time
     TripHistory:
       type: object
       properties:

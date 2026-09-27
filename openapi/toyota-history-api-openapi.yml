@@ -60,13 +60,6 @@ components:
           type: string
         dealerName:
           type: string
-    ServiceHistoryList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceHistory'
     Error:
       type: object
       properties:
@@ -74,6 +67,13 @@ components:
           type: string
         message:
           type: string
+    ServiceHistoryList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceHistory'
   responses:
     NotFound:
       description: Vehicle not found
