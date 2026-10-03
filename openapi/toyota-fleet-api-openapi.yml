@@ -88,6 +88,24 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   schemas:
+    VehicleEnrollmentRequest:
+      type: object
+      required:
+      - vin
+      properties:
+        vin:
+          type: string
+          minLength: 17
+          maxLength: 17
+          description: Vehicle Identification Number
+        unitId:
+          type: string
+          description: Telematics unit identifier (if known)
+        services:
+          type: array
+          items:
+            type: string
+          description: List of data services to subscribe to
     Error:
       type: object
       properties:
@@ -108,24 +126,6 @@ components:
           type: integer
         limit:
           type: integer
-    VehicleEnrollmentRequest:
-      type: object
-      required:
-      - vin
-      properties:
-        vin:
-          type: string
-          minLength: 17
-          maxLength: 17
-          description: Vehicle Identification Number
-        unitId:
-          type: string
-          description: Telematics unit identifier (if known)
-        services:
-          type: array
-          items:
-            type: string
-          description: List of data services to subscribe to
     Vehicle:
       type: object
       properties:
@@ -158,14 +158,14 @@ components:
           type: string
           format: date-time
   responses:
-    BadRequest:
-      description: Invalid request
+    NotFound:
+      description: Vehicle or resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Vehicle or resource not found
+    BadRequest:
+      description: Invalid request
       content:
         application/json:
           schema:

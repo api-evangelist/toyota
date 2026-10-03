@@ -122,21 +122,8 @@ components:
           - cool
           - heat
           - defrost
-          - false
+          - 'off'
         lastUpdatedAt:
-          type: string
-          format: date-time
-    RefreshStatus:
-      type: object
-      properties:
-        requestId:
-          type: string
-        status:
-          type: string
-        returnCode:
-          type: string
-          description: Return code (000000 indicates success)
-        timestamp:
           type: string
           format: date-time
     ClimateSettings:
@@ -156,6 +143,19 @@ components:
           - cool
           - heat
           - defrost
+    RefreshStatus:
+      type: object
+      properties:
+        requestId:
+          type: string
+        status:
+          type: string
+        returnCode:
+          type: string
+          description: Return code (000000 indicates success)
+        timestamp:
+          type: string
+          format: date-time
   securitySchemes:
     bearerAuth:
       type: http

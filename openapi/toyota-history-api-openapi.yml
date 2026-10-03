@@ -39,6 +39,13 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     ServiceHistory:
       type: object
       properties:
@@ -59,13 +66,6 @@ components:
         dealerCode:
           type: string
         dealerName:
-          type: string
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
           type: string
     ServiceHistoryList:
       type: object

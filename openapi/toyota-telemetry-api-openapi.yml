@@ -117,45 +117,6 @@ paths:
                 $ref: '#/components/schemas/TripList'
 components:
   schemas:
-    VehicleTelemetry:
-      type: object
-      properties:
-        vin:
-          type: string
-        odometer:
-          type: number
-          description: Odometer reading in miles
-        fuelLevel:
-          type: integer
-          description: Fuel percentage (0-100)
-        distanceSinceLastRefuel:
-          type: number
-          description: Miles driven since last refuel
-        estimatedRange:
-          type: number
-          description: Estimated range remaining in miles
-        lastReportedAt:
-          type: string
-          format: date-time
-    TripLocation:
-      type: object
-      properties:
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-        timestamp:
-          type: string
-          format: date-time
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     TripList:
       type: object
       properties:
@@ -169,28 +130,13 @@ components:
           type: integer
         offset:
           type: integer
-    VehicleLocation:
+    Error:
       type: object
       properties:
-        vin:
+        code:
           type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-        heading:
-          type: integer
-          description: Vehicle heading in degrees (0-359)
-        speed:
-          type: number
-          description: Vehicle speed in mph
-        isParked:
-          type: boolean
-        timestamp:
+        message:
           type: string
-          format: date-time
     Trip:
       type: object
       properties:
@@ -215,6 +161,60 @@ components:
           items:
             $ref: '#/components/schemas/TripLocation'
           description: GPS coordinates along the trip route
+    TripLocation:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        timestamp:
+          type: string
+          format: date-time
+    VehicleLocation:
+      type: object
+      properties:
+        vin:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        heading:
+          type: integer
+          description: Vehicle heading in degrees (0-359)
+        speed:
+          type: number
+          description: Vehicle speed in mph
+        isParked:
+          type: boolean
+        timestamp:
+          type: string
+          format: date-time
+    VehicleTelemetry:
+      type: object
+      properties:
+        vin:
+          type: string
+        odometer:
+          type: number
+          description: Odometer reading in miles
+        fuelLevel:
+          type: integer
+          description: Fuel percentage (0-100)
+        distanceSinceLastRefuel:
+          type: number
+          description: Miles driven since last refuel
+        estimatedRange:
+          type: number
+          description: Estimated range remaining in miles
+        lastReportedAt:
+          type: string
+          format: date-time
   responses:
     NotFound:
       description: Vehicle or resource not found

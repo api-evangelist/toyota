@@ -101,13 +101,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     VehicleStatus:
       type: object
       properties:
@@ -116,8 +109,8 @@ components:
         ignition:
           type: string
           enum:
-          - true
-          - false
+          - 'on'
+          - 'off'
         doorsLocked:
           type: boolean
         doorStatus:
@@ -166,19 +159,6 @@ components:
         lastUpdatedAt:
           type: string
           format: date-time
-    RefreshStatus:
-      type: object
-      properties:
-        requestId:
-          type: string
-        status:
-          type: string
-        returnCode:
-          type: string
-          description: Return code (000000 indicates success)
-        timestamp:
-          type: string
-          format: date-time
     VehicleHealth:
       type: object
       properties:
@@ -210,6 +190,26 @@ components:
         maintenanceRequired:
           type: boolean
         lastReportedAt:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    RefreshStatus:
+      type: object
+      properties:
+        requestId:
+          type: string
+        status:
+          type: string
+        returnCode:
+          type: string
+          description: Return code (000000 indicates success)
+        timestamp:
           type: string
           format: date-time
   responses:

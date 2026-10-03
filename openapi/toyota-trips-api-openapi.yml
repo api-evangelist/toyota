@@ -76,31 +76,6 @@ paths:
                 $ref: '#/components/schemas/TripHistoryList'
 components:
   schemas:
-    Coordinates:
-      type: object
-      properties:
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-        timestamp:
-          type: string
-          format: date-time
-    TripHistoryList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/TripHistory'
-        total:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
     TripHistory:
       type: object
       properties:
@@ -134,6 +109,31 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Coordinates'
+    Coordinates:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        timestamp:
+          type: string
+          format: date-time
+    TripHistoryList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TripHistory'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
   securitySchemes:
     bearerAuth:
       type: http

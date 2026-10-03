@@ -43,19 +43,6 @@ paths:
                 $ref: '#/components/schemas/RefreshStatus'
 components:
   schemas:
-    RefreshStatus:
-      type: object
-      properties:
-        requestId:
-          type: string
-        status:
-          type: string
-        returnCode:
-          type: string
-          description: Return code (000000 indicates success)
-        timestamp:
-          type: string
-          format: date-time
     RemoteCommand:
       type: object
       required:
@@ -77,6 +64,19 @@ components:
           minimum: 1
           maximum: 3
           description: Number of horn beeps for horn command
+    RefreshStatus:
+      type: object
+      properties:
+        requestId:
+          type: string
+        status:
+          type: string
+        returnCode:
+          type: string
+          description: Return code (000000 indicates success)
+        timestamp:
+          type: string
+          format: date-time
   securitySchemes:
     bearerAuth:
       type: http
