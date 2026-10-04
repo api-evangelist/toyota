@@ -43,6 +43,17 @@ paths:
                 $ref: '#/components/schemas/NotificationList'
 components:
   schemas:
+    NotificationList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+        total:
+          type: integer
+        unreadCount:
+          type: integer
     Notification:
       type: object
       properties:
@@ -71,17 +82,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    NotificationList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Notification'
-        total:
-          type: integer
-        unreadCount:
-          type: integer
   securitySchemes:
     bearerAuth:
       type: http

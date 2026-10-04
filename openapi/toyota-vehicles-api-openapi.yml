@@ -90,7 +90,33 @@ paths:
     - url: https://api.toyota.com/connected/v1
       description: Toyota Connected Services API
 components:
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Vehicle not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound_2:
+      description: Vehicle or resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    ConnectedVehicleList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectedVehicle'
     ConnectedVehicle:
       type: object
       properties:
@@ -124,13 +150,6 @@ components:
           type: string
         message:
           type: string
-    ConnectedVehicleList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConnectedVehicle'
     VehicleList:
       type: object
       properties:
@@ -175,25 +194,6 @@ components:
         enrolledAt:
           type: string
           format: date-time
-  responses:
-    NotFound:
-      description: Vehicle not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound_2:
-      description: Vehicle or resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

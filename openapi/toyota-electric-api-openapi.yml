@@ -72,13 +72,6 @@ components:
         timestamp:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     ElectricStatus:
       type: object
       properties:
@@ -114,6 +107,13 @@ components:
         lastUpdatedAt:
           type: string
           format: date-time
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
   responses:
     NotFound:
       description: Vehicle not found

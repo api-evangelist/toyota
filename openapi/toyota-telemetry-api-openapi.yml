@@ -117,6 +117,18 @@ paths:
                 $ref: '#/components/schemas/TripList'
 components:
   schemas:
+    TripLocation:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        timestamp:
+          type: string
+          format: date-time
     TripList:
       type: object
       properties:
@@ -130,6 +142,26 @@ components:
           type: integer
         offset:
           type: integer
+    VehicleTelemetry:
+      type: object
+      properties:
+        vin:
+          type: string
+        odometer:
+          type: number
+          description: Odometer reading in miles
+        fuelLevel:
+          type: integer
+          description: Fuel percentage (0-100)
+        distanceSinceLastRefuel:
+          type: number
+          description: Miles driven since last refuel
+        estimatedRange:
+          type: number
+          description: Estimated range remaining in miles
+        lastReportedAt:
+          type: string
+          format: date-time
     Error:
       type: object
       properties:
@@ -161,18 +193,6 @@ components:
           items:
             $ref: '#/components/schemas/TripLocation'
           description: GPS coordinates along the trip route
-    TripLocation:
-      type: object
-      properties:
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-        timestamp:
-          type: string
-          format: date-time
     VehicleLocation:
       type: object
       properties:
@@ -193,26 +213,6 @@ components:
         isParked:
           type: boolean
         timestamp:
-          type: string
-          format: date-time
-    VehicleTelemetry:
-      type: object
-      properties:
-        vin:
-          type: string
-        odometer:
-          type: number
-          description: Odometer reading in miles
-        fuelLevel:
-          type: integer
-          description: Fuel percentage (0-100)
-        distanceSinceLastRefuel:
-          type: number
-          description: Miles driven since last refuel
-        estimatedRange:
-          type: number
-          description: Estimated range remaining in miles
-        lastReportedAt:
           type: string
           format: date-time
   responses:
