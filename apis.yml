@@ -223,6 +223,12 @@ apis:
   - type: Documentation
     url: https://developer.eig.toyota.com/
 common:
+- type: Plans
+  url: plans/toyota-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/toyota-rate-limits.yml
+- type: FinOps
+  url: finops/toyota-finops.yml
 - type: CapabilityMap
   url: capabilities/toyota-capability-edges.yml
   name: Toyota Business Capability Map
