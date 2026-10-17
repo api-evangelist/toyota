@@ -89,6 +89,18 @@ components:
           type: integer
         offset:
           type: integer
+    Coordinates:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        timestamp:
+          type: string
+          format: date-time
     TripHistory:
       type: object
       properties:
@@ -122,18 +134,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Coordinates'
-    Coordinates:
-      type: object
-      properties:
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-        timestamp:
-          type: string
-          format: date-time
   securitySchemes:
     bearerAuth:
       type: http

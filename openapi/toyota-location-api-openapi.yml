@@ -38,6 +38,13 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: Vehicle not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     VehiclePosition:
       type: object
@@ -62,13 +69,6 @@ components:
           type: string
         message:
           type: string
-  responses:
-    NotFound:
-      description: Vehicle not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

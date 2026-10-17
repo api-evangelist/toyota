@@ -58,20 +58,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/RefreshStatus'
 components:
+  responses:
+    NotFound:
+      description: Vehicle not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    RefreshStatus:
+    Error:
       type: object
       properties:
-        requestId:
+        code:
           type: string
-        status:
+        message:
           type: string
-        returnCode:
-          type: string
-          description: Return code (000000 indicates success)
-        timestamp:
-          type: string
-          format: date-time
     ElectricStatus:
       type: object
       properties:
@@ -107,20 +108,19 @@ components:
         lastUpdatedAt:
           type: string
           format: date-time
-    Error:
+    RefreshStatus:
       type: object
       properties:
-        code:
+        requestId:
           type: string
-        message:
+        status:
           type: string
-  responses:
-    NotFound:
-      description: Vehicle not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+        returnCode:
+          type: string
+          description: Return code (000000 indicates success)
+        timestamp:
+          type: string
+          format: date-time
   securitySchemes:
     bearerAuth:
       type: http

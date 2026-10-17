@@ -88,20 +88,6 @@ paths:
                 $ref: '#/components/schemas/RefreshStatus'
 components:
   schemas:
-    ClimateCommand:
-      type: object
-      required:
-      - command
-      properties:
-        command:
-          type: string
-          enum:
-          - start
-          - stop
-          description: Climate control command
-        temperature:
-          type: number
-          description: Target temperature for start command
     ClimateSettings:
       type: object
       properties:
@@ -143,6 +129,20 @@ components:
         lastUpdatedAt:
           type: string
           format: date-time
+    ClimateCommand:
+      type: object
+      required:
+      - command
+      properties:
+        command:
+          type: string
+          enum:
+          - start
+          - stop
+          description: Climate control command
+        temperature:
+          type: number
+          description: Target temperature for start command
     RefreshStatus:
       type: object
       properties:
